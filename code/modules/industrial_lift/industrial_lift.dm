@@ -831,6 +831,9 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift/tram/subfloor/window
 	icon_state = "tram_subfloor_window"
 
+/obj/structure/industrial_lift/tram/subfloor/diagonal
+	icon_state = "tram_subfloor_diagonal"
+
 /datum/armor/structure_industrial_lift
 	melee = 50
 	fire = 80
