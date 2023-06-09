@@ -120,7 +120,7 @@
 	travel_distance = get_dist(idle_platform, destination_platform)
 	travel_trip_length = travel_distance
 	idle_platform = destination_platform
-	set_travelling(TRUE)
+	set_travelling(TRUE, travel_direction)
 	set_controls(LIFT_PLATFORM_LOCKED)
 	if(rapid) // bypass for unsafe, rapid departure
 		dispatch_tram(destination_platform)
@@ -192,12 +192,12 @@
 		tram_part.set_travelling(FALSE)
 
 
-/datum/lift_master/tram/proc/set_travelling(new_travelling)
+/datum/lift_master/tram/proc/set_travelling(new_travelling, direction)
 	if(travelling == new_travelling)
 		return
 
 	travelling = new_travelling
-	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling)
+	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling, direction)
 
 /**
  * Controls the doors of the tram when it departs and arrives at stations.

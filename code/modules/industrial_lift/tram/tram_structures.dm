@@ -35,6 +35,65 @@
 	smoothing_flags = NONE
 	smoothing_groups = NONE
 	icon_state = "tram-spoiler-retracted"
+	///Position of the spoiler
+	var/deployed = FALSE
+	///Weakref to the tram piece we control
+	var/datum/weakref/tram_ref
+	///The tram we're attached to
+	var/tram_id = MAIN_STATION_TRAM
+
+/obj/structure/window/reinforced/tram/spoiler/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/window/reinforced/tram/spoiler/LateInitialize()
+	. = ..()
+	find_tram()
+
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
+	if(tram_part)
+		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(set_spoiler))
+
+/obj/structure/window/reinforced/tram/spoiler/proc/find_tram()
+	for(var/datum/lift_master/tram/tram as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
+		if(tram.specific_lift_id != tram_id)
+			continue
+		tram_ref = WEAKREF(tram)
+		break
+
+/obj/structure/window/reinforced/tram/spoiler/proc/set_spoiler(source, travelling, direction)
+	SIGNAL_HANDLER
+
+	if(!travelling)
+		return
+	switch(direction)
+		if(SOUTH, EAST)
+			switch(dir)
+				if(NORTH, EAST)
+					retract_spoiler()
+				if(SOUTH, WEST)
+					deploy_spoiler()
+		if(NORTH, WEST)
+			switch(dir)
+				if(NORTH, EAST)
+					deploy_spoiler()
+				if(SOUTH, WEST)
+					retract_spoiler()
+	return
+
+/obj/structure/window/reinforced/tram/spoiler/proc/deploy_spoiler()
+	if(deployed)
+		return
+	flick("tram-spoiler-deploying", src)
+	icon_state = "tram-spoiler-deployed"
+	deployed = TRUE
+
+/obj/structure/window/reinforced/tram/spoiler/proc/retract_spoiler()
+	if(!deployed)
+		return
+	flick("tram-spoiler-retracting", src)
+	icon_state = "tram-spoiler-retracted"
+	deployed = FALSE
 
 /obj/structure/chair/sofa/bench/tram
 	name = "bench"
