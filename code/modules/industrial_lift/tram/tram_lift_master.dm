@@ -126,7 +126,17 @@
 		dispatch_tram(destination_platform)
 	else
 		update_tram_doors(CLOSE_DOORS)
-		addtimer(CALLBACK(src, PROC_REF(dispatch_tram), destination_platform), 3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(try_dispatch_tram), destination_platform), 3 SECONDS)
+
+/datum/lift_master/tram/proc/try_dispatch_tram(obj/effect/landmark/tram/destination_platform)
+	for(var/obj/machinery/door/airlock/tram/door as anything in GLOB.tram_doors)
+		message_admins("TRAM: Door status check: [door.airlock_state].")
+		if(door.airlock_state != 1)
+			message_admins("TRAM: Door status check: [door.airlock_state] FAILED.")
+			addtimer(CALLBACK(src, PROC_REF(try_dispatch_tram), destination_platform), 3 SECONDS)
+			return
+	message_admins("TRAM: Door status check PASSED.")
+	dispatch_tram(destination_platform)
 
 /datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/destination_platform)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
@@ -204,18 +214,18 @@
  * The tram doors are in a list of airlocks and we apply the proc on that list.
  */
 /datum/lift_master/tram/proc/update_tram_doors(action)
-	for(var/obj/machinery/door/window/tram/tram_door in GLOB.airlocks)
-		if(tram_door.associated_lift != specific_lift_id)
-			continue
+	for(var/obj/machinery/door/airlock/tram/tram_door in GLOB.airlocks)
+	//	if(tram_door.associated_lift != specific_lift_id)
+			//continue
 		set_door_state(tram_door, action)
 
 /datum/lift_master/tram/proc/set_door_state(tram_door, action)
 	switch(action)
 		if(OPEN_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, cycle_doors), action)
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), action)
 
 		if(CLOSE_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, cycle_doors), action)
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), action)
 
 		else
 			stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")

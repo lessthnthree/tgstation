@@ -29,11 +29,10 @@
 	fire = 99
 	acid = 100
 
-/obj/structure/window/reinforced/tram/spoiler
+/obj/structure/tram/spoiler
 	name = "tram spoiler"
+	icon = 'icons/obj/smooth_structures/tram_structure.dmi'
 	desc = "Nanotrasen bought the luxury package under the impression titanium spoilers make the tram go faster. They're just for looks, or potentially stabbing anybody who gets in the way."
-	smoothing_flags = NONE
-	smoothing_groups = NONE
 	icon_state = "tram-spoiler-retracted"
 	///Position of the spoiler
 	var/deployed = FALSE
@@ -42,11 +41,11 @@
 	///The tram we're attached to
 	var/tram_id = MAIN_STATION_TRAM
 
-/obj/structure/window/reinforced/tram/spoiler/Initialize(mapload)
+/obj/structure/tram/spoiler/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/window/reinforced/tram/spoiler/LateInitialize()
+/obj/structure/tram/spoiler/LateInitialize()
 	. = ..()
 	find_tram()
 
@@ -54,14 +53,14 @@
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(set_spoiler))
 
-/obj/structure/window/reinforced/tram/spoiler/proc/find_tram()
+/obj/structure/tram/spoiler/proc/find_tram()
 	for(var/datum/lift_master/tram/tram as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
 		if(tram.specific_lift_id != tram_id)
 			continue
 		tram_ref = WEAKREF(tram)
 		break
 
-/obj/structure/window/reinforced/tram/spoiler/proc/set_spoiler(source, travelling, direction)
+/obj/structure/tram/spoiler/proc/set_spoiler(source, travelling, direction)
 	SIGNAL_HANDLER
 
 	if(!travelling)
@@ -81,14 +80,14 @@
 					retract_spoiler()
 	return
 
-/obj/structure/window/reinforced/tram/spoiler/proc/deploy_spoiler()
+/obj/structure/tram/spoiler/proc/deploy_spoiler()
 	if(deployed)
 		return
 	flick("tram-spoiler-deploying", src)
 	icon_state = "tram-spoiler-deployed"
 	deployed = TRUE
 
-/obj/structure/window/reinforced/tram/spoiler/proc/retract_spoiler()
+/obj/structure/tram/spoiler/proc/retract_spoiler()
 	if(!deployed)
 		return
 	flick("tram-spoiler-retracting", src)
@@ -101,8 +100,6 @@
 	icon_state = "bench_middle"
 	greyscale_config = /datum/greyscale_config/bench_middle
 	greyscale_colors = "#00CCFF"
-
-
 
 /obj/structure/chair/sofa/bench/tram/left
 	icon_state = "bench_left"

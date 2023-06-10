@@ -41,8 +41,8 @@
 	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
 		signal.start_malfunction()
 
-	for(var/obj/machinery/door/window/tram/door as anything in GLOB.tram_doors)
-		door.start_malfunction()
+	for(var/obj/machinery/door/airlock/tram/door as anything in GLOB.tram_doors)
+	//	door.start_malfunction()
 
 	for(var/obj/machinery/destination_sign/sign as anything in GLOB.tram_signs)
 		sign.malfunctioning = TRUE
@@ -55,8 +55,8 @@
 	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
 		signal.end_malfunction()
 
-	for(var/obj/machinery/door/window/tram/door as anything in GLOB.tram_doors)
-		door.end_malfunction()
+	for(var/obj/machinery/door/airlock/tram/door as anything in GLOB.tram_doors)
+	//	door.end_malfunction()
 
 	for(var/obj/machinery/destination_sign/sign as anything in GLOB.tram_signs)
 		sign.malfunctioning = FALSE

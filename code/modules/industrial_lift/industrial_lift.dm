@@ -795,8 +795,8 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift/tram
 	name = "tram"
 	desc = "A tram for tramversing the station."
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "textured_large"
+	icon = 'icons/turf/tram.dmi'
+	icon_state = "titanium"
 	layer = TRAM_FLOOR_LAYER
 	base_icon_state = null
 	smoothing_flags = NONE
@@ -820,7 +820,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	create_multitile_platform = TRUE
 
 /obj/structure/industrial_lift/tram/white
-	icon_state = "textured_white_large"
+	icon_state = "titanium_white"
 
 /obj/structure/industrial_lift/tram/purple
 	icon_state = "titanium_purple"
@@ -831,8 +831,17 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift/tram/subfloor/window
 	icon_state = "tram_subfloor_window"
 
-/obj/structure/industrial_lift/tram/subfloor/diagonal
-	icon_state = "tram_subfloor_diagonal"
+/obj/structure/industrial_lift/tram/subfloor/corner/northwest
+	icon_state = "tram_subfloor_nw"
+
+/obj/structure/industrial_lift/tram/subfloor/corner/southwest
+	icon_state = "tram_subfloor_sw"
+
+/obj/structure/industrial_lift/tram/subfloor/corner/northeast
+	icon_state = "tram_subfloor_ne"
+
+/obj/structure/industrial_lift/tram/subfloor/corner/southeast
+	icon_state = "tram_subfloor_se"
 
 /datum/armor/structure_industrial_lift
 	melee = 50
