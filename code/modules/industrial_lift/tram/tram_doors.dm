@@ -1,6 +1,5 @@
 #define AIRLOCK_CLOSED 1
 #define AIRLOCK_CLOSING 2
-#define AIRLOCK_OPEN 3
 #define AIRLOCK_OPENING 4
 #define AIRLOCK_DENY 5
 #define AIRLOCK_EMAG 6
@@ -103,7 +102,7 @@
 				return TRUE
 			SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, FALSE)
 			operating = TRUE
-			playsound(src, doorOpen, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, doorOpen, vol = 40, vary = FALSE)
 			update_icon(ALL, AIRLOCK_OPENING, TRUE)
 			update_freelook_sight()
 			sleep(0.7 SECONDS)
@@ -116,97 +115,66 @@
 			return TRUE
 
 		if(CLOSE_DOORS)
-			attempt_close(rapid)
+			attempt++
 
-/obj/machinery/door/airlock/tram/proc/attempt_close(rapid)
-	attempt++
+			message_admins("TRAM: Door close attempt [attempt]")
+			if(attempt >= 4 || rapid)
+				attempt_cycle(rapid = TRUE)
+				attempt = 0
+				return
 
-	message_admins("TRAM: Door close attempt [attempt]")
-	if(attempt >= 3)
-		say("DOORS ARE NOW CLOSING, ASSHOLE!")
-		close(forced = BYPASS_DOOR_CHECKS, force_crush = TRUE)
-		attempt = 0
-	else
-		playsound(src, 'sound/machines/chime.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-		say("Doors are now closing!")
-		sleep(TRAM_DOOR_WARNING_TIME)
-		close(forced = BYPASS_DOOR_CHECKS)
-		addtimer(CALLBACK(src, PROC_REF(verify_status)), 3 SECONDS)
+			if(attempt == 1)
+				playsound(src, 'sound/machines/chime.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+
+			addtimer(CALLBACK(src, PROC_REF(verify_status)), 3 SECONDS)
+			attempt_cycle(rapid = FALSE)
 
 /obj/machinery/door/airlock/tram/proc/verify_status()
 	if(airlock_state != 1)
-		if(attempt >=2)
+		if(attempt == 3)
 			playsound(src, 'sound/machines/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+			say("YOU'RE HOLDING UP THE TRAM, ASSHOLE!")
+			cycle_tram_doors(CLOSE_DOORS, rapid = TRUE)
 		else
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-		say("Please stand clear of the doors!")
-		attempt_close()
-	else
-		attempt = 0
+			cycle_tram_doors(CLOSE_DOORS, rapid = FALSE)
 
-/*
-/obj/machinery/door/airlock/tram/close(forced = BYPASS_DOOR_CHECKS, force_crush = FALSE)
+
+/obj/machinery/door/airlock/tram/proc/attempt_cycle(rapid = FALSE)
 	if(operating || welded || locked || seal)
 		return FALSE
 	if(density)
 		return TRUE
-
-	use_power(50)
-	playsound(src, doorClose, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
-	operating = TRUE
-	do_animate(AIRLOCK_FRAME_CLOSING)
-	layer = CLOSED_DOOR_LAYER
-	sleep(0.5 SECONDS)
-	if(!force_crush)
-		for(var/atom/movable/M in get_turf(src))
-			if(M.density && M != src) //something is blocking the door
-				do_animate(AIRLOCK_FRAME_OPENING)
-				say("Stand clear of the closing door!")
-				addtimer(CALLBACK(src, PROC_REF(attempt_close)), TRAM_DOOR_RECYCLE_TIME, TIMER_UNIQUE | TIMER_NO_HASH_WAIT | TIMER_OVERRIDE)
-				return FALSE
-	set_density(TRUE)
-	flags_1 |= PREVENT_CLICK_UNDER_1
-	air_update_turf(TRUE, TRUE)
-	sleep(0.5 SECONDS)
-	crush()
-	update_freelook_sight()
-	update_icon(ALL, AIRLOCK_CLOSED, 1)
-	operating = FALSE
-	return TRUE
-*/
-/*
+	var/hungry_door = rapid || malfunctioning
 	if((obj_flags & EMAGGED) || malfunctioning)
-		do_sparks(5, TRUE, src)
+		do_sparks(6, TRUE, src)
 		playsound(src, SFX_SPARKS, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		sleep(0.6 SECONDS)
-	playsound(src, doorClose, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	update_icon(ALL, AIRLOCK_CLOSING, TRUE)
+	use_power(50)
+	playsound(src, doorClose, vol = 40, vary = FALSE)
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE)
+	operating = TRUE
 	layer = CLOSED_DOOR_LAYER
+	update_icon(ALL, AIRLOCK_CLOSING, 1)
+	sleep(1.4 SECONDS)
+	if(!hungry_door)
+		for(var/atom/movable/blocker in get_turf(src))
+			if(blocker.density && blocker != src) //something is blocking the door
+				say("Please stand clear of the doors!")
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+				layer = OPEN_DOOR_LAYER
+				update_icon(ALL, AIRLOCK_OPEN, 1)
+				operating = FALSE
+				return FALSE
+	sleep(0.6 SECONDS)
+	set_density(TRUE)
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
-	sleep(1.4 SECONDS)
-	if(attempt < 3)
-		if(locate(/mob/living) in get_turf(src))
-			message_admins("TRAM: Door close attempt [attempt] FAILED.")
-			open(1)
-			addtimer(CALLBACK(src, PROC_REF(attempt_close)), 3 SECONDS)
-			return
-	else
-		message_admins("TRAM: Door close attempt [attempt] SUCCESS.")
-		crush()
-	attempt = 0
-	set_density(TRUE)
-	sleep(1 SECONDS)
+	crush()
+	sleep(0.7 SECONDS)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
+	update_freelook_sight()
 	operating = FALSE
-	return TRUE
-*/
-
-/obj/machinery/door/airlock/tram/try_to_force_door_open(force_type = FORCING_DOOR_CHECKS)
-	use_power(50)
-	playsound(src, doorOpen, vol = 50, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	attempt = 0
 	return TRUE
 
 /obj/machinery/door/airlock/tram/proc/find_tram()
@@ -243,7 +211,7 @@
 	add_fingerprint(user)
 	if(tram_part.travel_distance < XING_DEFAULT_TRAM_LENGTH || tram_part.travel_distance > tram_part.travel_trip_length - XING_DEFAULT_TRAM_LENGTH)
 		return // we're already animating, don't reset that
-	//cycle_doors(OPEN_DOORS, TRUE) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
+	open(forced = BYPASS_DOOR_CHECKS) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
 	return
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)
@@ -251,7 +219,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/right, 0)
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING
-#undef AIRLOCK_OPEN
 #undef AIRLOCK_OPENING
 #undef AIRLOCK_DENY
 #undef AIRLOCK_EMAG
