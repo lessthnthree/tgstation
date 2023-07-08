@@ -16,14 +16,13 @@
 
 /obj/machinery/door/airlock/tram
 	name = "tram door"
-	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tram/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/tram/tram-solo.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tram/tram-solo-overlays.dmi'
 	opacity = FALSE
 	assemblytype = null
 	glass = TRUE
 	airlock_material = "glass"
 	air_tight = TRUE
-	bound_width = 64 // 2x1
 	// req_access = list("tcomms")
 	elevator_linked_id = MAIN_STATION_TRAM
 	doorOpen = 'sound/machines/tramopen.ogg'
@@ -37,6 +36,16 @@
 	/// Are the doors in a malfunctioning state (dangerous)
 	var/malfunctioning = FALSE
 	var/attempt = 0
+
+/obj/machinery/door/airlock/tram/left
+	name = "tram door"
+	icon = 'icons/obj/doors/airlocks/tram/tram-left.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tram/tram-left-overlays.dmi'
+
+/obj/machinery/door/airlock/tram/right
+	name = "tram door"
+	icon = 'icons/obj/doors/airlocks/tram/tram-right.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tram/tram-right-overlays.dmi'
 
 /obj/machinery/door/window/tram
 	name = "tram door"
@@ -107,19 +116,33 @@
 			return TRUE
 
 		if(CLOSE_DOORS)
-			close(1)
+			attempt_close(rapid)
 
 /obj/machinery/door/airlock/tram/proc/attempt_close(rapid)
 	attempt++
+
 	message_admins("TRAM: Door close attempt [attempt]")
 	if(attempt >= 3)
 		say("DOORS ARE NOW CLOSING, ASSHOLE!")
 		close(forced = BYPASS_DOOR_CHECKS, force_crush = TRUE)
 		attempt = 0
 	else
+		playsound(src, 'sound/machines/chime.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		say("Doors are now closing!")
 		sleep(TRAM_DOOR_WARNING_TIME)
 		close(forced = BYPASS_DOOR_CHECKS)
+		addtimer(CALLBACK(src, PROC_REF(verify_status)), 3 SECONDS)
+
+/obj/machinery/door/airlock/tram/proc/verify_status()
+	if(airlock_state != 1)
+		if(attempt >=2)
+			playsound(src, 'sound/machines/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		else
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		say("Please stand clear of the doors!")
+		attempt_close()
+	else
+		attempt = 0
 
 /*
 /obj/machinery/door/airlock/tram/close(forced = BYPASS_DOOR_CHECKS, force_crush = FALSE)
