@@ -118,7 +118,7 @@
 	if((holder.flags & SEALED_CONTAINER) && (holder.chem_temp < LIQUID_PLASMA_IG))
 		return
 	var/atom/A = holder.my_atom
-	A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
+	A.atmos_spawn_air("[GAS_PLASMA]=[volume];[TURF_TEMPERATURE(holder.chem_temp)]")
 	holder.del_reagent(type)
 
 /datum/reagent/toxin/plasma/expose_turf(turf/open/exposed_turf, reac_volume)
@@ -126,7 +126,7 @@
 		return
 	var/temp = holder ? holder.chem_temp : T20C
 	if(temp >= LIQUID_PLASMA_BP)
-		exposed_turf.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
+		exposed_turf.atmos_spawn_air("[GAS_PLASMA]=[reac_volume];[TURF_TEMPERATURE(temp)]")
 	return ..()
 
 #undef LIQUID_PLASMA_BP
@@ -401,16 +401,18 @@
 	ph = 3.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/toxin/pestkiller/on_new(data)
+	. = ..()
+	AddElement(/datum/element/bugkiller_reagent)
+
+/datum/reagent/toxin/pestkiller/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = affected_mob.adjustToxLoss(2 * toxpwr * REM * seconds_per_tick, updating_health = FALSE, required_biotype = MOB_BUG)
+	return ..() || .
+
 //Pest Spray
 /datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_toxic(round(volume))
 	mytray.adjust_pestlevel(-rand(1,2))
-
-/datum/reagent/toxin/pestkiller/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
-	if(exposed_mob.mob_biotypes & MOB_BUG)
-		var/damage = min(round(0.4*reac_volume, 0.1),10)
-		exposed_mob.adjustToxLoss(damage, required_biotype = affected_biotype)
 
 /datum/reagent/toxin/pestkiller/organic
 	name = "Natural Pest Killer"
@@ -638,7 +640,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(SPT_PROB(2.5, seconds_per_tick))
+	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)) //mmmm, the forbidden pickle juice
+		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype) //it counteracts its own toxin damage.
+		. = TRUE
+		return ..()
+	else if(SPT_PROB(2.5, seconds_per_tick))
 		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,15))
 		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 1.2)
 	else
@@ -657,9 +664,8 @@
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	var/newsize = 1.1 * RESIZE_DEFAULT_SIZE
-	affected_mob.resize = newsize/current_size
+	affected_mob.update_transform(newsize/current_size)
 	current_size = newsize
-	affected_mob.update_transform()
 
 	toxpwr = 0.1 * volume
 	affected_mob.adjustBruteLoss((0.3 * volume) * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -671,9 +677,8 @@
 		..()
 
 /datum/reagent/toxin/venom/on_mob_end_metabolize(mob/living/affected_mob)
-	affected_mob.resize = RESIZE_DEFAULT_SIZE/current_size
+	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
 	current_size = RESIZE_DEFAULT_SIZE
-	affected_mob.update_transform()
 	..()
 
 /datum/reagent/toxin/fentanyl

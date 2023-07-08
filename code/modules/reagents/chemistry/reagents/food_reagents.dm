@@ -55,7 +55,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_DEAD_PROCESS
 
 	var/brute_heal = 1
 	var/burn_heal = 0
@@ -185,7 +185,7 @@
 	penetrates_skin = NONE
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	default_container = /obj/item/reagent_containers/condiment/quality_oil
+	default_container = /obj/item/reagent_containers/condiment/cooking_oil
 
 /datum/reagent/consumable/cooking_oil/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -530,6 +530,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "slime"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/cooking_oil
 
 /datum/reagent/consumable/cornoil/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
@@ -784,33 +785,24 @@
 	color = "#b5a213"
 	taste_description = "tingling mushroom"
 	ph = 11.2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	//Lazy list of mobs affected by the luminosity of this reagent.
-	var/list/mobs_affected
+	self_consuming = TRUE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_DEAD_PROCESS
 
-/datum/reagent/consumable/tinlux/expose_mob(mob/living/exposed_mob)
+/datum/reagent/consumable/tinlux/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
-	add_reagent_light(exposed_mob)
+	if(!exposed_mob.reagents) // they won't process the reagent, but still benefit from its effects for a duration.
+		var/amount = round(reac_volume * clamp(1 - touch_protection, 0, 1))
+		var/duration = (amount / metabolization_rate) * SSmobs.wait
+		if(duration > 1 SECONDS)
+			exposed_mob.adjust_timed_status_effect(duration, /datum/status_effect/tinlux_light)
 
-/datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/M)
-	remove_reagent_light(M)
+/datum/reagent/consumable/tinlux/on_mob_add(mob/living/living_mob)
+	. = ..()
+	living_mob.apply_status_effect(/datum/status_effect/tinlux_light) //infinite duration
 
-/datum/reagent/consumable/tinlux/proc/on_living_holder_deletion(mob/living/source)
-	SIGNAL_HANDLER
-	remove_reagent_light(source)
-
-/datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = living_holder.mob_light(2)
-	LAZYSET(mobs_affected, living_holder, mob_light_obj)
-	RegisterSignal(living_holder, COMSIG_PARENT_QDELETING, PROC_REF(on_living_holder_deletion))
-
-/datum/reagent/consumable/tinlux/proc/remove_reagent_light(mob/living/living_holder)
-	UnregisterSignal(living_holder, COMSIG_PARENT_QDELETING)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = LAZYACCESS(mobs_affected, living_holder)
-	LAZYREMOVE(mobs_affected, living_holder)
-	if(mob_light_obj)
-		qdel(mob_light_obj)
-
+/datum/reagent/consumable/tinlux/on_mob_delete(mob/living/living_mob)
+	. = ..()
+	living_mob.remove_status_effect(/datum/status_effect/tinlux_light)
 
 /datum/reagent/consumable/vitfro
 	name = "Vitrium Froth"
