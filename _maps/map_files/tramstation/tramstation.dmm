@@ -2632,7 +2632,6 @@
 /area/station/asteroid)
 "ahs" = (
 /obj/machinery/newscaster/directional/north,
-/obj/machinery/modular_computer/console/preset/id,
 /obj/structure/sign/calendar/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
@@ -3407,9 +3406,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "anJ" = (
-/obj/machinery/modular_computer/console/preset/engineering{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
@@ -5553,7 +5549,9 @@
 /area/station/hallway/primary/tram/center)
 "aGO" = (
 /obj/structure/industrial_lift/tram,
-/obj/machinery/door/airlock/tram/left,
+/obj/machinery/door/airlock/tram{
+	dir = 8
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "aGP" = (
@@ -7438,7 +7436,7 @@
 /area/station/security/courtroom)
 "beq" = (
 /obj/machinery/computer/atmos_control/oxygen_tank{
-	atmos_chambers = list("o2ordance"="Oxygen  Supply")
+	atmos_chambers = list("o2ordance"="Oxygen    Supply")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/north,
@@ -7627,9 +7625,6 @@
 /area/station/commons/vacant_room)
 "bia" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/modular_computer/console/preset/engineering{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "bid" = (
@@ -8444,7 +8439,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/command/nuke_storage)
 "byp" = (
-/obj/machinery/modular_computer/console/preset/research,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/glass/reinforced,
 /area/station/command/heads_quarters/rd)
@@ -9413,7 +9407,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "bNZ" = (
-/obj/machinery/modular_computer/console/preset/civilian,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
@@ -10601,7 +10594,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck");
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck");
 	layer = 3.1
 	},
 /turf/closed/wall/r_wall,
@@ -12911,13 +12904,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/checker,
 /area/station/service/kitchen)
-"cZo" = (
-/obj/structure/sign/collision_counter{
-	pixel_x = -4;
-	pixel_y = 2
-	},
-/turf/closed/wall,
-/area/station/medical/medbay/lobby)
 "cZz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -13115,9 +13101,6 @@
 /turf/open/floor/glass,
 /area/station/commons/fitness/recreation)
 "ddz" = (
-/obj/machinery/modular_computer/console/preset/cargochat/service{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
@@ -15057,9 +15040,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "dPS" = (
-/obj/machinery/modular_computer/console/preset/id{
-	dir = 8
-	},
 /obj/machinery/keycard_auth/directional/north,
 /obj/machinery/button/door/directional/north{
 	id = "cmoshutter";
@@ -16404,7 +16384,6 @@
 	},
 /obj/machinery/newscaster/directional/south,
 /obj/structure/reagent_dispensers/water_cooler,
-/obj/structure/sign/delamination_counter/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "eqJ" = (
@@ -17372,7 +17351,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
@@ -18630,9 +18609,6 @@
 "fkq" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/machinery/modular_computer/console/preset/engineering{
-	dir = 1
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -19819,9 +19795,6 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "fGS" = (
-/obj/machinery/modular_computer/console/preset/id{
-	dir = 1
-	},
 /obj/structure/sign/clock/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
@@ -21473,7 +21446,6 @@
 	dir = 10;
 	network = list("ss13","engine","engineering")
 	},
-/obj/structure/sign/delamination_counter/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "gpD" = (
@@ -24539,9 +24511,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "hCm" = (
-/obj/machinery/modular_computer/console/preset/civilian{
-	dir = 8
-	},
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/station/commons/vacant_room)
@@ -25261,9 +25230,6 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/west,
-/obj/machinery/modular_computer/console/preset/id{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "hQE" = (
@@ -25794,9 +25760,6 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "iaZ" = (
-/obj/machinery/modular_computer/console/preset/engineering{
-	dir = 1
-	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
@@ -28260,9 +28223,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "iWm" = (
-/obj/structure/sign/collision_counter{
-	pixel_x = -32
-	},
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular{
 	pixel_x = -5;
@@ -32079,7 +32039,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "kqy" = (
-/obj/vehicle/sealed/mecha/working/ripley/cargo,
 /obj/machinery/requests_console/directional/north{
 	department = "Cargo Bay";
 	name = "Cargo Bay Requests Console"
@@ -32432,7 +32391,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/tram/mid)
 "kxF" = (
-/obj/item/kirbyplants/dead,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -34288,9 +34246,6 @@
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 2
-	},
-/obj/structure/sign/collision_counter{
-	pixel_x = 32
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
@@ -41891,7 +41846,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
@@ -43782,7 +43737,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck");
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck");
 	layer = 3.1
 	},
 /turf/closed/wall,
@@ -43898,7 +43853,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
 	},
 /obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
@@ -44885,7 +44840,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/machinery/modular_computer/console/preset/cargochat/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "oZq" = (
@@ -49508,11 +49462,6 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
 /obj/item/crowbar,
-/obj/structure/sign/collision_counter{
-	desc = "A display that indicates how many dents that'll need fixed after the shift is over.";
-	name = "darwin award counter";
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
@@ -51197,7 +51146,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_upper_center_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 1
@@ -51238,7 +51187,9 @@
 /area/station/construction/mining/aux_base)
 "rlO" = (
 /obj/structure/industrial_lift/tram,
-/obj/machinery/door/airlock/tram/right,
+/obj/machinery/door/airlock/tram{
+	dir = 4
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "rlU" = (
@@ -52194,7 +52145,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "tram_lower_center_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
@@ -54297,7 +54248,6 @@
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "stC" = (
-/obj/machinery/modular_computer/console/preset/civilian,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
@@ -55660,9 +55610,6 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "sQu" = (
-/obj/machinery/modular_computer/console/preset/curator{
-	dir = 4
-	},
 /obj/machinery/light_switch/directional/west{
 	pixel_x = -21;
 	pixel_y = 9
@@ -58272,9 +58219,6 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
 "tLA" = (
-/obj/machinery/modular_computer/console/preset/id{
-	dir = 4
-	},
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -60203,7 +60147,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/machinery/modular_computer/console/preset/id,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "utY" = (
@@ -63928,9 +63871,6 @@
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "vGt" = (
-/obj/machinery/modular_computer/console/preset/civilian{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
@@ -65367,9 +65307,6 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/machinery/modular_computer/console/preset/civilian{
-	dir = 8
-	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/research)
 "whS" = (
@@ -65923,7 +65860,6 @@
 "wtR" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/tree/palm/style_random,
-/obj/effect/overlay/coconut,
 /turf/open/misc/grass/jungle,
 /area/station/science/explab)
 "wtS" = (
@@ -66620,9 +66556,6 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "wFS" = (
-/obj/machinery/modular_computer/console/preset/cargochat/security{
-	dir = 4
-	},
 /obj/machinery/newscaster/directional/west,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -66968,7 +66901,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck");
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck");
 	req_access = list("mining")
 	},
 /obj/effect/landmark/lift_id{
@@ -68264,9 +68197,6 @@
 /area/station/security/interrogation)
 "xrD" = (
 /obj/effect/landmark/navigate_destination/engineering,
-/obj/machinery/modular_computer/console/preset/cargochat/engineering{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -69920,9 +69850,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/modular_computer/console/preset/cargochat/medical{
-	dir = 4
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "yaB" = (
@@ -169148,7 +169075,7 @@ sgt
 dYS
 mTM
 fxs
-cZo
+wyd
 wyd
 rks
 rks
