@@ -16,7 +16,7 @@
 /obj/machinery/door/airlock/tram
 	name = "tram door"
 	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
+	overlays_file = null
 	opacity = FALSE
 	assemblytype = null
 	glass = TRUE
@@ -95,7 +95,7 @@
 			playsound(src, doorOpen, vol = 40, vary = FALSE)
 			update_icon(ALL, AIRLOCK_OPENING, TRUE)
 			update_freelook_sight()
-			sleep(0.7 SECONDS)
+			sleep(4 SECONDS)
 			set_density(FALSE)
 			flags_1 &= ~PREVENT_CLICK_UNDER_1
 			air_update_turf(TRUE, FALSE)
