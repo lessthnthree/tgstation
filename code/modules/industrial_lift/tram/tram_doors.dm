@@ -15,8 +15,8 @@
 
 /obj/machinery/door/airlock/tram
 	name = "tram door"
-	icon = 'icons/obj/doors/airlocks/tram/tram-solo.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tram/tram-solo-overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
 	opacity = FALSE
 	assemblytype = null
 	glass = TRUE
@@ -35,16 +35,6 @@
 	/// Are the doors in a malfunctioning state (dangerous)
 	var/malfunctioning = FALSE
 	var/attempt = 0
-
-/obj/machinery/door/airlock/tram/left
-	name = "tram door"
-	icon = 'icons/obj/doors/airlocks/tram/tram-left.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tram/tram-left-overlays.dmi'
-
-/obj/machinery/door/airlock/tram/right
-	name = "tram door"
-	icon = 'icons/obj/doors/airlocks/tram/tram-right.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tram/tram-right-overlays.dmi'
 
 /obj/machinery/door/window/tram
 	name = "tram door"
