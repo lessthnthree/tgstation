@@ -108,7 +108,7 @@
 	energy = 5
 	bio = 100
 	fire = 25
-	acid  =25
+	acid = 25
 	wound = 5
 
 /datum/mod_theme/engineering
@@ -621,6 +621,61 @@
 	fire = 100
 	acid = 100
 	wound = 5
+
+/datum/mod_theme/heads/hop
+	name = "executive"
+	desc = "An upgraded, armor-plated version of DeForest's MODsuit for HoP use."
+	extended_desc = "An upgraded, armor-plated version of DeForest's MODsuit for HoP use."
+	default_skin = "executive"
+	armor_type = /datum/armor/mod_theme_hop
+	resistance_flags = FIRE_PROOF|ACID_PROOF
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
+	slowdown_inactive = 0.75
+	slowdown_active = 0.25
+	allowed_suit_storage = list(
+		/obj/item/paper,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton/telescopic,
+	)
+	skins = list(
+		"rescue" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+	)
+
+/datum/armor/mod_theme_hop
+	melee = 20
+	bullet = 15
+	laser = 15
+	energy = 15
+	bomb = 40
+	bio = 100
+	fire = 100
+	acid = 100
+	wound = 15
 
 /datum/mod_theme/research
 	name = "research"

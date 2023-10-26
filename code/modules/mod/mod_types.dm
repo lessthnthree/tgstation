@@ -144,6 +144,21 @@
 		/obj/item/mod/module/injector,
 	)
 
+/obj/item/mod/control/pre_equipped/heads/hop
+	theme = /datum/mod_theme/heads/hop
+	applied_cell = /obj/item/stock_parts/cell/super
+	applied_modules = list(
+		/obj/item/mod/module/storage/large_capacity,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/paper_dispenser,
+		/obj/item/mod/module/stamp,
+	)
+	default_pins = list(
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/jetpack/advanced,
+	)
+
 /obj/item/mod/control/pre_equipped/research
 	theme = /datum/mod_theme/research
 	applied_cell = /obj/item/stock_parts/cell/super
