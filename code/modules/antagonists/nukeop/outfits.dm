@@ -69,7 +69,7 @@
 
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/syndicate
-	back = /obj/item/mod/control/pre_equipped/nuclear
+	back = /obj/item/mod/control/pre_equipped/syndicate/nuclear
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
 	internals_slot = ITEM_SLOT_RPOCKET
 	belt = /obj/item/storage/belt/military
@@ -81,7 +81,7 @@
 
 /datum/outfit/syndicate/full/plasmaman
 	name = "Syndicate Operative - Full Kit (Plasmaman)"
-	back = /obj/item/mod/control/pre_equipped/nuclear/plasmaman
+	back = /obj/item/mod/control/pre_equipped/syndicate/nuclear/plasmaman
 	uniform = /obj/item/clothing/under/plasmaman/syndicate
 	r_pocket = /obj/item/tank/internals/plasmaman/belt/full
 	mask = null

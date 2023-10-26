@@ -104,7 +104,7 @@
 	theme = /datum/mod_theme/security
 
 /obj/item/mod/construction/plating/cosmohonk
-	theme = /datum/mod_theme/cosmohonk
+	theme = /datum/mod_theme/clown
 
 #define START_STEP "start"
 #define CORE_STEP "core"

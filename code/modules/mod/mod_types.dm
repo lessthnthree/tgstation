@@ -78,8 +78,8 @@
 		/obj/item/mod/module/flashlight,
 	)
 
-/obj/item/mod/control/pre_equipped/advanced
-	theme = /datum/mod_theme/advanced
+/obj/item/mod/control/pre_equipped/heads/ce
+	theme = /datum/mod_theme/heads/ce
 	applied_cell = /obj/item/stock_parts/cell/super
 	applied_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
@@ -94,8 +94,8 @@
 		/obj/item/mod/module/jetpack,
 	)
 
-/obj/item/mod/control/pre_equipped/loader
-	theme = /datum/mod_theme/loader
+/obj/item/mod/control/pre_equipped/cargo
+	theme = /datum/mod_theme/cargo
 	applied_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/flashlight,
@@ -134,8 +134,8 @@
 		/obj/item/mod/module/quick_carry,
 	)
 
-/obj/item/mod/control/pre_equipped/rescue
-	theme = /datum/mod_theme/rescue
+/obj/item/mod/control/pre_equipped/heads/cmo
+	theme = /datum/mod_theme/heads/cmo
 	applied_cell = /obj/item/stock_parts/cell/super
 	applied_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
@@ -166,8 +166,8 @@
 		/obj/item/mod/module/dispenser/mirage,
 	)
 
-/obj/item/mod/control/pre_equipped/safeguard
-	theme = /datum/mod_theme/safeguard
+/obj/item/mod/control/pre_equipped/heads/hos
+	theme = /datum/mod_theme/heads/hos
 	applied_cell = /obj/item/stock_parts/cell/super
 	applied_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
@@ -182,8 +182,8 @@
 		/obj/item/mod/module/jetpack,
 	)
 
-/obj/item/mod/control/pre_equipped/magnate
-	theme = /datum/mod_theme/magnate
+/obj/item/mod/control/pre_equipped/heads/captain
+	theme = /datum/mod_theme/heads/captain
 	applied_cell = /obj/item/stock_parts/cell/hyper
 	applied_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
@@ -196,15 +196,15 @@
 		/obj/item/mod/module/jetpack/advanced,
 	)
 
-/obj/item/mod/control/pre_equipped/cosmohonk
-	theme = /datum/mod_theme/cosmohonk
+/obj/item/mod/control/pre_equipped/clown
+	theme = /datum/mod_theme/clown
 	applied_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/waddle,
 		/obj/item/mod/module/bikehorn,
 	)
 
-/obj/item/mod/control/pre_equipped/traitor
+/obj/item/mod/control/pre_equipped/syndicate
 	theme = /datum/mod_theme/syndicate
 	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/cell/super
@@ -222,8 +222,8 @@
 		/obj/item/mod/module/jetpack,
 	)
 
-/obj/item/mod/control/pre_equipped/traitor_elite
-	theme = /datum/mod_theme/elite
+/obj/item/mod/control/pre_equipped/syndicate/elite/dna_lock
+	theme = /datum/mod_theme/syndicate/elite
 	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/cell/bluespace
 	applied_modules = list(
@@ -241,7 +241,7 @@
 		/obj/item/mod/module/jump_jet,
 	)
 
-/obj/item/mod/control/pre_equipped/nuclear
+/obj/item/mod/control/pre_equipped/syndicate/nuclear
 	theme = /datum/mod_theme/syndicate
 	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/cell/hyper
@@ -260,23 +260,23 @@
 		/obj/item/mod/module/jump_jet,
 	)
 
-/obj/item/mod/control/pre_equipped/nuclear/no_jetpack
+/obj/item/mod/control/pre_equipped/syndicate/nuclear/no_jetpack
 
-/obj/item/mod/control/pre_equipped/nuclear/no_jetpack/Initialize(mapload, new_theme, new_skin, new_core)
+/obj/item/mod/control/pre_equipped/syndicate/nuclear/no_jetpack/Initialize(mapload, new_theme, new_skin, new_core)
 	applied_modules -= list(/obj/item/mod/module/jetpack/advanced, /obj/item/mod/module/jump_jet)
 	return ..()
 
-/obj/item/mod/control/pre_equipped/nuclear/plasmaman
+/obj/item/mod/control/pre_equipped/syndicate/nuclear/plasmaman
 
-/obj/item/mod/control/pre_equipped/nuclear/plasmaman/Initialize(mapload, new_theme, new_skin, new_core)
+/obj/item/mod/control/pre_equipped/syndicate/nuclear/plasmaman/Initialize(mapload, new_theme, new_skin, new_core)
 	applied_modules += /obj/item/mod/module/plasma_stabilizer
 	return ..()
 
-/obj/item/mod/control/pre_equipped/nuclear/unrestricted
+/obj/item/mod/control/pre_equipped/syndicate/nuclear/unrestricted
 	req_access = null
 
-/obj/item/mod/control/pre_equipped/elite
-	theme = /datum/mod_theme/elite
+/obj/item/mod/control/pre_equipped/syndicate/elite
+	theme = /datum/mod_theme/syndicate/elite
 	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/cell/bluespace
 	req_access = list(ACCESS_SYNDICATE)
@@ -294,7 +294,7 @@
 		/obj/item/mod/module/jump_jet,
 	)
 
-/obj/item/mod/control/pre_equipped/elite/flamethrower
+/obj/item/mod/control/pre_equipped/syndicate/elite/flamethrower
 	applied_modules = list(
 		/obj/item/mod/module/storage/syndicate,
 		/obj/item/mod/module/emp_shield,
@@ -338,8 +338,8 @@
 		/obj/item/mod/module/tether
 	)
 
-/obj/item/mod/control/pre_equipped/enchanted
-	theme = /datum/mod_theme/enchanted
+/obj/item/mod/control/pre_equipped/wizard
+	theme = /datum/mod_theme/wizard
 	starting_frequency = null
 	applied_core = /obj/item/mod/core/infinite
 	applied_modules = list(
@@ -386,8 +386,8 @@
 		/obj/item/mod/module/anomaly_locked/kinesis/prototype,
 	)
 
-/obj/item/mod/control/pre_equipped/responsory
-	theme = /datum/mod_theme/responsory
+/obj/item/mod/control/pre_equipped/centcom/ert
+	theme = /datum/mod_theme/centcom/ert
 	starting_frequency = MODLINK_FREQ_CENTCOM
 	applied_cell = /obj/item/stock_parts/cell/hyper
 	req_access = list(ACCESS_CENT_GENERAL)
@@ -403,42 +403,42 @@
 	/// Additional module we add, as a treat.
 	var/additional_module
 
-/obj/item/mod/control/pre_equipped/responsory/Initialize(mapload, new_theme, new_skin, new_core)
+/obj/item/mod/control/pre_equipped/centcom/ert/Initialize(mapload, new_theme, new_skin, new_core)
 	applied_modules.Insert(1, insignia_type)
 	if(additional_module)
 		applied_modules += additional_module
 		default_pins += additional_module
 	return ..()
 
-/obj/item/mod/control/pre_equipped/responsory/commander
+/obj/item/mod/control/pre_equipped/centcom/ert/commander
 	insignia_type = /obj/item/mod/module/insignia/commander
 	additional_module = /obj/item/mod/module/power_kick
 
-/obj/item/mod/control/pre_equipped/responsory/security
+/obj/item/mod/control/pre_equipped/centcom/ert/security
 	insignia_type = /obj/item/mod/module/insignia/security
 	additional_module = /obj/item/mod/module/pepper_shoulders
 
-/obj/item/mod/control/pre_equipped/responsory/engineer
+/obj/item/mod/control/pre_equipped/centcom/ert/engineer
 	insignia_type = /obj/item/mod/module/insignia/engineer
 	additional_module = /obj/item/mod/module/rad_protection
 
-/obj/item/mod/control/pre_equipped/responsory/medic
+/obj/item/mod/control/pre_equipped/centcom/ert/medic
 	insignia_type = /obj/item/mod/module/insignia/medic
 	additional_module = /obj/item/mod/module/quick_carry
 
-/obj/item/mod/control/pre_equipped/responsory/janitor
+/obj/item/mod/control/pre_equipped/centcom/ert/janitor
 	insignia_type = /obj/item/mod/module/insignia/janitor
 	additional_module = /obj/item/mod/module/clamp
 
-/obj/item/mod/control/pre_equipped/responsory/clown
+/obj/item/mod/control/pre_equipped/centcom/ert/clown
 	insignia_type = /obj/item/mod/module/insignia/clown
 	additional_module = /obj/item/mod/module/bikehorn
 
-/obj/item/mod/control/pre_equipped/responsory/chaplain
+/obj/item/mod/control/pre_equipped/centcom/ert/chaplain
 	insignia_type = /obj/item/mod/module/insignia/chaplain
 	additional_module = /obj/item/mod/module/injector
 
-/obj/item/mod/control/pre_equipped/responsory/inquisitory
+/obj/item/mod/control/pre_equipped/centcom/ert/inquisitory
 	applied_skin = "inquisitory"
 	applied_modules = list(
 		/obj/item/mod/module/anti_magic,
@@ -449,24 +449,24 @@
 		/obj/item/mod/module/flashlight,
 	)
 
-/obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
+/obj/item/mod/control/pre_equipped/centcom/ert/inquisitory/commander
 	insignia_type = /obj/item/mod/module/insignia/commander
 	additional_module = /obj/item/mod/module/power_kick
 
-/obj/item/mod/control/pre_equipped/responsory/inquisitory/security
+/obj/item/mod/control/pre_equipped/centcom/ert/inquisitory/security
 	insignia_type = /obj/item/mod/module/insignia/security
 	additional_module = /obj/item/mod/module/pepper_shoulders
 
-/obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
+/obj/item/mod/control/pre_equipped/centcom/ert/inquisitory/medic
 	insignia_type = /obj/item/mod/module/insignia/medic
 	additional_module = /obj/item/mod/module/quick_carry
 
-/obj/item/mod/control/pre_equipped/responsory/inquisitory/chaplain
+/obj/item/mod/control/pre_equipped/centcom/ert/inquisitory/chaplain
 	insignia_type = /obj/item/mod/module/insignia/chaplain
 	additional_module = /obj/item/mod/module/injector
 
-/obj/item/mod/control/pre_equipped/apocryphal
-	theme = /datum/mod_theme/apocryphal
+/obj/item/mod/control/pre_equipped/centcom/deathsquad
+	theme = /datum/mod_theme/centcom/deathsquad
 	starting_frequency = MODLINK_FREQ_CENTCOM
 	applied_cell = /obj/item/stock_parts/cell/bluespace
 	req_access = list(ACCESS_CENT_SPECOPS)
@@ -481,7 +481,7 @@
 		/obj/item/mod/module/jetpack,
 	)
 
-/obj/item/mod/control/pre_equipped/apocryphal/officer
+/obj/item/mod/control/pre_equipped/centcom/deathsquad/officer
 	applied_modules = list(
 		/obj/item/mod/module/storage/bluespace,
 		/obj/item/mod/module/hat_stabilizer,
@@ -491,8 +491,8 @@
 		/obj/item/mod/module/jetpack,
 	)
 
-/obj/item/mod/control/pre_equipped/corporate
-	theme = /datum/mod_theme/corporate
+/obj/item/mod/control/pre_equipped/centcom/elite
+	theme = /datum/mod_theme/centcom/elite
 	starting_frequency = MODLINK_FREQ_CENTCOM
 	applied_core = /obj/item/mod/core/infinite
 	req_access = list(ACCESS_CENT_SPECOPS)
@@ -538,8 +538,8 @@
 		/obj/item/mod/module/injector,
 	)
 
-/obj/item/mod/control/pre_equipped/administrative
-	theme = /datum/mod_theme/administrative
+/obj/item/mod/control/pre_equipped/admin
+	theme = /datum/mod_theme/admin
 	starting_frequency = MODLINK_FREQ_CENTCOM
 	applied_core = /obj/item/mod/core/infinite
 	applied_modules = list(
@@ -570,7 +570,7 @@
 	applied_skin = "honkerative"
 
 /obj/item/mod/control/pre_equipped/empty/elite
-	theme = /datum/mod_theme/elite
+	theme = /datum/mod_theme/syndicate/elite
 
 /obj/item/mod/control/pre_equipped/empty/ninja
 	theme = /datum/mod_theme/ninja

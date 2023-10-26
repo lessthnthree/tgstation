@@ -215,12 +215,12 @@
 
 /datum/objective_item/steal/traitor/captain_modsuit
 	name = "the captain's magnate MOD control unit"
-	targetitem = /obj/item/mod/control/pre_equipped/magnate
+	targetitem = /obj/item/mod/control/pre_equipped/heads/captain
 	excludefromjob = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
 
-/obj/item/mod/control/pre_equipped/magnate/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/magnate)
+/obj/item/mod/control/pre_equipped/heads/captain/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/heads/captain)
 
 /datum/objective_item/steal/traitor/captain_spare
 	name = "the captain's spare ID"

@@ -39,7 +39,7 @@
 	name = "ERT Commander"
 
 	id = /obj/item/card/id/advanced/centcom/ert
-	back = /obj/item/mod/control/pre_equipped/responsory/commander
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/commander
 	l_hand = /obj/item/gun/energy/e_gun
 	box = /obj/item/storage/box/survival/centcom
 	backpack_contents = list(
@@ -64,7 +64,7 @@
 	name = "ERT Security"
 
 	id = /obj/item/card/id/advanced/centcom/ert/security
-	back = /obj/item/mod/control/pre_equipped/responsory/security
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/security
 	l_hand = /obj/item/gun/energy/e_gun/stun
 	box = /obj/item/storage/box/survival/centcom
 	backpack_contents = list(
@@ -89,7 +89,7 @@
 	name = "ERT Medic"
 
 	id = /obj/item/card/id/advanced/centcom/ert/medical
-	back = /obj/item/mod/control/pre_equipped/responsory/medic
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/medic
 	box = /obj/item/storage/box/survival/centcom
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
@@ -120,7 +120,7 @@
 	name = "ERT Engineer"
 
 	id = /obj/item/card/id/advanced/centcom/ert/engineer
-	back = /obj/item/mod/control/pre_equipped/responsory/engineer
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/engineer
 	l_hand = /obj/item/gun/energy/e_gun
 	box = /obj/item/storage/box/survival/centcom
 	backpack_contents = list(
@@ -179,14 +179,14 @@
 /datum/outfit/centcom/ert/commander/inquisitor
 	name = "Inquisition Commander"
 
-	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/inquisitory/commander
 	r_hand = /obj/item/nullrod/vibro/talking/chainsword
 	backpack_contents = null
 
 /datum/outfit/centcom/ert/security/inquisitor
 	name = "Inquisition Security"
 
-	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/security
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/inquisitory/security
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded = 1,
 		/obj/item/melee/baton/security/loaded = 1,
@@ -196,7 +196,7 @@
 /datum/outfit/centcom/ert/medic/inquisitor
 	name = "Inquisition Medic"
 
-	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/inquisitory/medic
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
 		/obj/item/melee/baton/security/loaded = 1,
@@ -208,7 +208,7 @@
 	name = "ERT Chaplain"
 
 	id = /obj/item/card/id/advanced/centcom/ert/chaplain
-	back = /obj/item/mod/control/pre_equipped/responsory/chaplain
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/chaplain
 	l_hand = /obj/item/gun/energy/e_gun
 	belt = /obj/item/storage/belt/soulstone
 	glasses = /obj/item/clothing/glasses/hud/health
@@ -221,7 +221,7 @@
 /datum/outfit/centcom/ert/chaplain/inquisitor
 	name = "Inquisition Chaplain"
 
-	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/chaplain
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/inquisitory/chaplain
 	backpack_contents = list(
 		/obj/item/grenade/chem_grenade/holy = 1,
 		/obj/item/nullrod = 1,
@@ -232,7 +232,7 @@
 	name = "ERT Janitor"
 
 	id = /obj/item/card/id/advanced/centcom/ert/janitor
-	back = /obj/item/mod/control/pre_equipped/responsory/janitor
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/janitor
 	box = /obj/item/storage/box/survival/centcom
 	backpack_contents = list(
 		/obj/item/grenade/clusterbuster/cleaner = 1,
@@ -262,7 +262,7 @@
 	name = "ERT Clown"
 
 	id = /obj/item/card/id/advanced/centcom/ert/clown
-	back = /obj/item/mod/control/pre_equipped/responsory/clown
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/clown
 	box = /obj/item/storage/box/survival/centcom
 	backpack_contents = list(
 		/obj/item/gun/ballistic/revolver/reverse = 1,
@@ -426,7 +426,7 @@
 	id = /obj/item/card/id/advanced/black/deathsquad
 	id_trim = /datum/id_trim/centcom/deathsquad
 	uniform = /obj/item/clothing/under/rank/centcom/commander
-	back = /obj/item/mod/control/pre_equipped/apocryphal
+	back = /obj/item/mod/control/pre_equipped/centcom/deathsquad
 	box = /obj/item/storage/box/survival/centcom
 	backpack_contents = list(
 		/obj/item/ammo_box/a357 = 1,
@@ -465,7 +465,7 @@
 /datum/outfit/centcom/death_commando/officer
 	name = "Death Commando Officer"
 
-	back = /obj/item/mod/control/pre_equipped/apocryphal/officer
+	back = /obj/item/mod/control/pre_equipped/centcom/deathsquad/officer
 
 /datum/outfit/centcom/death_commando/officer/post_equip(mob/living/carbon/human/squaddie, visualsOnly = FALSE)
 	. = ..()

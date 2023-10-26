@@ -84,7 +84,7 @@
 	name = "Chief Engineer (MODsuit)"
 
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/advanced
+	back = /obj/item/mod/control/pre_equipped/heads/ce
 	glasses = /obj/item/clothing/glasses/meson/engine
 	gloves = /obj/item/clothing/gloves/color/yellow
 	head = null

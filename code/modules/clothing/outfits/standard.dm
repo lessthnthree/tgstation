@@ -257,7 +257,7 @@
 	suit = null
 	head = null
 	mask = /obj/item/clothing/mask/gas/sechailer
-	back = /obj/item/mod/control/pre_equipped/corporate
+	back = /obj/item/mod/control/pre_equipped/centcom/elite
 	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/ghost_cultist
@@ -439,7 +439,7 @@
 	id = /obj/item/card/id/advanced/debug
 	uniform = /obj/item/clothing/under/misc/patriotsuit
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/administrative
+	back = /obj/item/mod/control/pre_equipped/admin
 	backpack_contents = list(
 		/obj/item/melee/energy/axe = 1,
 		/obj/item/storage/part_replacer/bluespace/tier4 = 1,

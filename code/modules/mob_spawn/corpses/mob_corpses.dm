@@ -33,7 +33,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
-	back = /obj/item/mod/control/pre_equipped/nuclear
+	back = /obj/item/mod/control/pre_equipped/syndicate/nuclear
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
@@ -73,7 +73,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
-	back = /obj/item/mod/control/pre_equipped/elite
+	back = /obj/item/mod/control/pre_equipped/syndicate/elite
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
@@ -296,7 +296,7 @@
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
-	back = /obj/item/mod/control/pre_equipped/responsory/security
+	back = /obj/item/mod/control/pre_equipped/centcom/ert/security
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/ert/security
 

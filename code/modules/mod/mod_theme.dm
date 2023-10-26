@@ -230,7 +230,7 @@
 	acid = 75
 	wound = 10
 
-/datum/mod_theme/advanced
+/datum/mod_theme/heads/ce
 	name = "advanced"
 	desc = "An advanced version of Nakamura Engineering's classic suit, shining with a white, acid and fire resistant polish."
 	extended_desc = "The flagship version of the Nakamura Engineering industrial model, and their latest product. \
@@ -396,7 +396,7 @@
 	acid = 75
 	wound = 15
 
-/datum/mod_theme/loader
+/datum/mod_theme/cargo
 	name = "loader"
 	desc = "An unsealed experimental motorized harness manufactured by Scarborough Arms for quick and efficient munition supplies."
 	extended_desc = "This powered suit is an experimental spinoff of in-atmosphere Engineering suits. \
@@ -550,7 +550,7 @@
 	acid = 75
 	wound = 5
 
-/datum/mod_theme/rescue
+/datum/mod_theme/heads/cmo
 	name = "rescue"
 	desc = "An advanced version of DeForest Medical Corporation's medical suit, designed for quick rescue of bodies from the most dangerous environments."
 	extended_desc = "An upgraded, armor-plated version of DeForest Medical Corporation's medical suit, \
@@ -749,7 +749,7 @@
 	acid = 75
 	wound = 15
 
-/datum/mod_theme/safeguard
+/datum/mod_theme/heads/hos
 	name = "safeguard"
 	desc = "An Apadyne Technologies advanced security suit, offering greater speed and fire protection than the standard security model."
 	extended_desc = "An Apadyne Technologies advanced security suit, and their latest model. This variant has \
@@ -810,7 +810,7 @@
 	acid = 95
 	wound = 15
 
-/datum/mod_theme/magnate
+/datum/mod_theme/heads/captain
 	name = "magnate"
 	desc = "A fancy, very protective suit for Nanotrasen's captains. Shock, fire and acid-proof while also having a large capacity and high speed."
 	extended_desc = "They say it costs four hundred thousand credits to run this MODsuit... for twelve seconds. \
@@ -877,7 +877,7 @@
 	acid = 100
 	wound = 15
 
-/datum/mod_theme/cosmohonk
+/datum/mod_theme/clown
 	name = "cosmohonk"
 	desc = "A suit by Honk Ltd. Protects against low humor environments. Most of the tech went to lower the power cost."
 	extended_desc = "The Cosmohonk MODsuit was originally designed for interstellar comedy in low-humor environments. \
@@ -1030,7 +1030,7 @@
 	acid = 90
 	wound = 25
 
-/datum/mod_theme/elite
+/datum/mod_theme/syndicate/elite
 	name = "elite"
 	desc = "An elite suit upgraded by Cybersun Industries, offering upgraded armor values."
 	extended_desc = "An evolution of the syndicate suit, featuring a bulkier build and a matte black color scheme, \
@@ -1246,7 +1246,7 @@
 	acid = 100
 	wound = 30
 
-/datum/mod_theme/enchanted
+/datum/mod_theme/wizard
 	name = "enchanted"
 	desc = "The Wizard Federation's relatively low-tech MODsuit. Is very protective, though."
 	extended_desc = "The Wizard Federation's relatively low-tech MODsuit. This armor employs not \
@@ -1437,7 +1437,7 @@
 	acid = 75
 	wound = 5
 
-/datum/mod_theme/responsory
+/datum/mod_theme/centcom/ert
 	name = "responsory"
 	desc = "A high-speed rescue suit by Nanotrasen, intended for its emergency response teams."
 	extended_desc = "A streamlined suit of Nanotrasen design, these sleek black suits are only worn by \
@@ -1523,7 +1523,7 @@
 	acid = 90
 	wound = 10
 
-/datum/mod_theme/apocryphal
+/datum/mod_theme/centcom/deathsquad
 	name = "apocryphal"
 	desc = "A high-tech, only technically legal, armored suit created by a collaboration effort between Nanotrasen and Apadyne Technologies."
 	extended_desc = "A bulky and only legal by technicality suit, this ominous black and red MODsuit is only worn by \
@@ -1587,7 +1587,7 @@
 	acid = 100
 	wound = 25
 
-/datum/mod_theme/corporate
+/datum/mod_theme/centcom/elite
 	name = "corporate"
 	desc = "A fancy, high-tech suit for Nanotrasen's high ranking officers."
 	extended_desc = "An even more costly version of the Magnate model, the corporate suit is a thermally insulated, \
@@ -1763,7 +1763,7 @@
 	fire = 100
 	acid = 100
 
-/datum/mod_theme/administrative
+/datum/mod_theme/admin
 	name = "administrative"
 	desc = "A suit made of adminium. Who comes up with these stupid mineral names?"
 	extended_desc = "Yeah, okay, I guess you can call that an event. What I consider an event is something actually \

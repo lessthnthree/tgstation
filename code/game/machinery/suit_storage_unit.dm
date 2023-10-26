@@ -79,12 +79,12 @@
 /obj/machinery/suit_storage_unit/captain
 	mask_type = /obj/item/clothing/mask/gas/atmos/captain
 	storage_type = /obj/item/tank/jetpack/oxygen/captain
-	mod_type = /obj/item/mod/control/pre_equipped/magnate
+	mod_type = /obj/item/mod/control/pre_equipped/heads/captain
 
 /obj/machinery/suit_storage_unit/centcom
 	mask_type = /obj/item/clothing/mask/gas/atmos/centcom
 	storage_type = /obj/item/tank/jetpack/oxygen/captain
-	mod_type = /obj/item/mod/control/pre_equipped/corporate
+	mod_type = /obj/item/mod/control/pre_equipped/centcom/elite
 
 /obj/machinery/suit_storage_unit/engine
 	mask_type = /obj/item/clothing/mask/breath
@@ -98,7 +98,7 @@
 /obj/machinery/suit_storage_unit/ce
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/clothing/shoes/magboots/advance
-	mod_type = /obj/item/mod/control/pre_equipped/advanced
+	mod_type = /obj/item/mod/control/pre_equipped/heads/ce
 
 /obj/machinery/suit_storage_unit/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
@@ -107,7 +107,7 @@
 /obj/machinery/suit_storage_unit/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 	storage_type = /obj/item/tank/internals/oxygen
-	mod_type = /obj/item/mod/control/pre_equipped/safeguard
+	mod_type = /obj/item/mod/control/pre_equipped/heads/hos
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
@@ -126,7 +126,7 @@
 /obj/machinery/suit_storage_unit/cmo
 	mask_type = /obj/item/clothing/mask/breath/medical
 	storage_type = /obj/item/tank/internals/oxygen
-	mod_type = /obj/item/mod/control/pre_equipped/rescue
+	mod_type = /obj/item/mod/control/pre_equipped/heads/cmo
 
 /obj/machinery/suit_storage_unit/rd
 	mask_type = /obj/item/clothing/mask/breath
@@ -136,10 +136,10 @@
 /obj/machinery/suit_storage_unit/syndicate
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	storage_type = /obj/item/tank/jetpack/oxygen/harness
-	mod_type = /obj/item/mod/control/pre_equipped/nuclear
+	mod_type = /obj/item/mod/control/pre_equipped/syndicate/nuclear
 
 /obj/machinery/suit_storage_unit/syndicate/lavaland
-	mod_type = /obj/item/mod/control/pre_equipped/nuclear/no_jetpack
+	mod_type = /obj/item/mod/control/pre_equipped/syndicate/nuclear/no_jetpack
 
 /obj/machinery/suit_storage_unit/interdyne
 	mask_type = /obj/item/clothing/mask/gas/syndicate
@@ -174,7 +174,7 @@
 	base_icon_state = "industrial"
 
 /obj/machinery/suit_storage_unit/industrial/loader
-	mod_type = /obj/item/mod/control/pre_equipped/loader
+	mod_type = /obj/item/mod/control/pre_equipped/cargo
 
 /obj/machinery/suit_storage_unit/Initialize(mapload)
 	. = ..()

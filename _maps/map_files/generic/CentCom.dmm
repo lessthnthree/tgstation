@@ -9306,7 +9306,7 @@
 /area/centcom/tdome/administration)
 "Sh" = (
 /obj/structure/table/reinforced,
-/obj/item/mod/control/pre_equipped/corporate{
+/obj/item/mod/control/pre_equipped/centcom/elite{
 	pixel_y = 5
 	},
 /obj/item/clothing/gloves/combat,

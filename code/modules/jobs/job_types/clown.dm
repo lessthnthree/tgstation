@@ -77,7 +77,7 @@
 	name = "Clown (MODsuit)"
 
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/cosmohonk
+	back = /obj/item/mod/control/pre_equipped/clown
 	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly)
