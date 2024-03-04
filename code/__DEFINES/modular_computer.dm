@@ -35,7 +35,7 @@
 #define PROGRAM_CATEGORY_DEVICE "Device Tools"
 #define PROGRAM_CATEGORY_EQUIPMENT "Equipment"
 #define PROGRAM_CATEGORY_GAMES "Games"
-#define PROGRAM_CATEGORY_SECURITY "Security & Records"
+#define PROGRAM_CATEGORY_SECURITY_RECORDS "Security & Records"
 #define PROGRAM_CATEGORY_ENGINEERING "Engineering"
 #define PROGRAM_CATEGORY_SUPPLY "Supply"
 #define PROGRAM_CATEGORY_SCIENCE "Science"
