@@ -1,7 +1,7 @@
 /datum/computer_file/program/ntnetmonitor
 	filename = "wirecarp"
 	filedesc = "WireCarp"
-	downloader_category = PROGRAM_CATEGORY_SECURITY_RECORDS
+	downloader_category = PROGRAM_CATEGORY_ENGINEERING
 	program_open_overlay = "comm_monitor"
 	extended_desc = "This program monitors stationwide NTNet network, provides access to logging systems, and allows for configuration changes"
 	size = 12
