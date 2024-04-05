@@ -1,11 +1,3 @@
-// Defines for the ballmer peak.
-#define BALLMER_PEAK_LOW_END 12.9
-#define BALLMER_PEAK_HIGH_END 13.8
-#define BALLMER_PEAK_WINDOWS_ME 26
-
-/// The threshld which determine if someone is tipsy vs drunk
-#define TIPSY_THRESHOLD 6
-
 /**
  * The drunk status effect.
  * Slowly decreases in drunk_value over time, causing effects based on that value.
@@ -92,7 +84,7 @@
 		return
 
 	// Become fully drunk at over than 6 drunk value
-	if(drunk_value >= TIPSY_THRESHOLD)
+	if(drunk_value >= BLOOD_DRUNK_POWER_TIPSY)
 		owner.apply_status_effect(/datum/status_effect/inebriated/drunk, drunk_value)
 
 /**
@@ -129,7 +121,7 @@
 		return
 
 	// Return to "tipsyness" when we're below 6.
-	if(drunk_value < TIPSY_THRESHOLD)
+	if(drunk_value < BLOOD_DRUNK_POWER_TIPSY)
 		owner.apply_status_effect(/datum/status_effect/inebriated/tipsy, drunk_value)
 
 /datum/status_effect/inebriated/drunk/on_tick_effects()
@@ -138,29 +130,29 @@
 	// that they'll say one of the special "ballmer message" lines, depending their drunk-ness level.
 	var/obj/item/organ/internal/liver/liver_organ = owner.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver_organ && HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && prob(5))
-		if(drunk_value >= BALLMER_PEAK_LOW_END && drunk_value <= BALLMER_PEAK_HIGH_END)
+		if(drunk_value >= BLOOD_DRUNK_POWER_BALLMER_LOW && drunk_value <= BLOOD_DRUNK_POWER_BALLMER_HIGH)
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
 
-		if(drunk_value > BALLMER_PEAK_WINDOWS_ME) // by this point you're into windows ME territory
+		if(drunk_value > BLOOD_DRUNK_POWER_BALLMER_WIN_ME) // by this point you're into windows ME territory
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
 
 	// Drunk slurring scales in intensity based on how drunk we are -at 16 you will likely not even notice it,
 	// but when we start to scale up you definitely will
-	if(drunk_value >= 16)
+	if(drunk_value >= BLOOD_DRUNK_POWER_DRUNK)
 		owner.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk, max_duration = 20 SECONDS)
 
 	// And drunk people will always lose jitteriness
 	owner.adjust_jitter(-6 SECONDS)
 
 	// Over 41, we have a 30% chance to gain confusion, and we will always have 20 seconds of dizziness.
-	if(drunk_value >= 41)
+	if(drunk_value >= BLOOD_DRUNK_POWER_WASTED)
 		if(prob(30))
 			owner.adjust_confusion(2 SECONDS)
 
 		owner.set_dizzy_if_lower(20 SECONDS)
 
 	// Over 51, we have a 3% chance to gain a lot of confusion and vomit, and we will always have 50 seconds of dizziness
-	if(drunk_value >= 51)
+	if(drunk_value >= BLOOD_DRUNK_POWER_WASTED + 10)
 		owner.set_dizzy_if_lower(50 SECONDS)
 		if(prob(3))
 			owner.adjust_confusion(15 SECONDS)
@@ -169,24 +161,24 @@
 				carbon_owner.vomit(VOMIT_CATEGORY_DEFAULT) // Vomiting clears toxloss - consider this a blessing
 
 	// Over 71, we will constantly have blurry eyes
-	if(drunk_value >= 71)
+	if(drunk_value >= BLOOD_DRUNK_POWER_DANGER)
 		owner.set_eye_blur_if_lower((drunk_value * 2 SECONDS) - 140 SECONDS)
 
 	// Over 81, we will gain constant toxloss
-	if(drunk_value >= 81)
+	if(drunk_value >= BLOOD_DRUNK_POWER_CRIT)
 		owner.adjustToxLoss(1)
 		if(owner.stat == CONSCIOUS && prob(5))
 			to_chat(owner, span_warning("Maybe you should lie down for a bit..."))
 
 	// Over 91, we gain even more toxloss, brain damage, and have a chance of dropping into a long sleep
-	if(drunk_value >= 91)
+	if(drunk_value >= BLOOD_DRUNK_POWER_CRIT + 10)
 		owner.adjustToxLoss(1)
 		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
 		if(owner.stat == CONSCIOUS)
 			attempt_to_blackout()
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.
-	if(drunk_value >= 101)
+	if(drunk_value >= BLOOD_DRUNK_POWER_CRIT + 20)
 		owner.adjustToxLoss(2)
 
 /datum/status_effect/inebriated/drunk/proc/attempt_to_blackout()
@@ -210,9 +202,3 @@
 	desc = "All that alcohol you've been drinking is impairing your speech, \
 		motor skills, and mental cognition. Make sure to act like it."
 	icon_state = "drunk"
-
-#undef BALLMER_PEAK_LOW_END
-#undef BALLMER_PEAK_HIGH_END
-#undef BALLMER_PEAK_WINDOWS_ME
-
-#undef TIPSY_THRESHOLD

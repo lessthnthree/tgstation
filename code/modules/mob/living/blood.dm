@@ -364,13 +364,16 @@
 	if(!B)
 		B = new(T)
 
-/mob/living/proc/get_blood_alcohol_content()
-	var/blood_alcohol_content = 0
+/mob/living/proc/get_blood_drunk_power()
+	var/blood_drunk_power = 0
 	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
 	if(!isnull(inebriation))
-		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
+		blood_drunk_power = round(inebriation.drunk_value, 0.01)
 
-	return blood_alcohol_content
+	return blood_drunk_power
+
+/mob/living/proc/get_blood_alcohol_content()
+	return round(get_blood_drunk_power() * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
 
 #undef BLOOD_DRIP_RATE_MOD
 #undef DRUNK_POWER_TO_BLOOD_ALCOHOL

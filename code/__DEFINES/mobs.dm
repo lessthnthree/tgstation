@@ -284,6 +284,20 @@
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
+// Blood drunk power levels for humans
+#define BLOOD_DRUNK_POWER_NONE 0
+#define BLOOD_DRUNK_POWER_TIPSY 6
+#define BLOOD_DRUNK_POWER_DRUNK 16
+#define BLOOD_DRUNK_POWER_WASTED 41
+#define BLOOD_DRUNK_POWER_DANGER 71
+#define BLOOD_DRUNK_POWER_CRIT 81
+
+// If our owner is a scientist (has the trait "TRAIT_BALLMER_SCIENTIST"), there's a 5% chance
+// that they'll say one of the special "ballmer message" lines, depending their drunk-ness level.
+#define BLOOD_DRUNK_POWER_BALLMER_LOW 12.9
+#define BLOOD_DRUNK_POWER_BALLMER_HIGH 13.8
+#define BLOOD_DRUNK_POWER_BALLMER_WIN_ME 26
+
 //Charge levels for Ethereals, in joules.
 #define ETHEREAL_CHARGE_NONE 0
 #define ETHEREAL_CHARGE_LOWPOWER (400 KILO JOULES)
