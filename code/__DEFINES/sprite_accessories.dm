@@ -7,6 +7,8 @@
 #define FACIAL_HAIR_COLOR "facial_hair_color"
 /// Color of the sprite accessory will match the owner's (left) eye color
 #define EYE_COLOR "eye_color"
+/// Color of the sprite accessory will match the owner's DNA color, which is granted by certain species
+#define DNA_COLOR "dna_color"
 
 // ~color source defines for species hair overrides
 /// Uses the species's mutant color for the hair color

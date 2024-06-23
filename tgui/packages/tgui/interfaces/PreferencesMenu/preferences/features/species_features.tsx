@@ -104,7 +104,22 @@ export const feature_lizard_tail: FeatureChoiced = {
   },
 };
 
-export const feature_mcolor: Feature<string> = {
+export const feature_ext_ear_color_1: Feature<string> = {
+  name: 'Ear color primary',
+  component: FeatureColorInput,
+};
+
+export const feature_ext_ear_color_2: Feature<string> = {
+  name: 'Ear color secondary',
+  component: FeatureColorInput,
+};
+
+export const feature_ext_ear_color_3: Feature<string> = {
+  name: 'Ear color tertiary',
+  component: FeatureColorInput,
+};
+
+export const feature_ext_r: Feature<string> = {
   name: 'Mutant color',
   component: FeatureColorInput,
 };

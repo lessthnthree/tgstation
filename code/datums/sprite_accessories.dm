@@ -46,6 +46,9 @@
 	var/dimension_y = 32
 	/// Should this sprite block emissives?
 	var/em_block = FALSE
+	var/dna_color_primary
+	var/dna_color_secondary
+	var/dna_color_tertiary
 
 /datum/sprite_accessory/blank
 	name = "None"
@@ -1857,23 +1860,37 @@
 	icon_state = "angler"
 
 /datum/sprite_accessory/ears
-	icon = 'icons/mob/human/cat_features.dmi'
+	//icon = 'icons/mob/human/cat_features.dmi'
+	icon = 'local/icons/mob/mutant/sprite_accessories/ears.dmi'
 	em_block = TRUE
+
 
 /datum/sprite_accessory/ears/none
 	name = "None"
 	icon_state = "none"
+	dna_color_primary = "ext_ear_color_1"
+	dna_color_secondary = "ext_ear_color_2"
+	dna_color_tertiary = "ext_ear_color_3"
 
 /datum/sprite_accessory/ears/cat
-	name = "Cat"
-	icon_state = "cat"
+	name = "Normal"
+	icon_state = "catnormal"
 	hasinner = TRUE
-	color_src = HAIR_COLOR
+	color_src = DNA_COLOR
 
 /datum/sprite_accessory/ears/cat/big
 	name = "Big"
-	icon_state = "big"
+	icon_state = "catbig"
 
+/datum/sprite_accessory/ears/cat/eevee
+	name = "Eevee"
+	icon_state = "eevee"
+
+/datum/sprite_accessory/ears/cat/perky
+	name = "Perky"
+	icon_state = "perky"
+
+/*
 /datum/sprite_accessory/ears/cat/miqo
 	name = "Coeurl"
 	icon_state = "miqo"
@@ -1897,6 +1914,7 @@
 	hasinner = TRUE
 	color_src = HAIR_COLOR
 	locked = TRUE
+*/
 
 /datum/sprite_accessory/wings/none
 	name = "None"

@@ -650,9 +650,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/mutable_appearance/accessory_overlay = mutable_appearance(accessory.icon, layer = -layer)
 
 			if(accessory.gender_specific)
-				accessory_overlay.icon_state = "[g]_[bodypart]_[accessory.icon_state]_[layertext]"
+				accessory_overlay.icon_state = "[g]_[bodypart]_[accessory.icon_state]_[layertext]_primary"
 			else
-				accessory_overlay.icon_state = "m_[bodypart]_[accessory.icon_state]_[layertext]"
+				accessory_overlay.icon_state = "m_[bodypart]_[accessory.icon_state]_[layertext]_primary"
 
 			if(accessory.em_block)
 				accessory_overlay.overlays += emissive_blocker(accessory_overlay.icon, accessory_overlay.icon_state, source, accessory_overlay.alpha)
@@ -665,6 +665,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					switch(accessory.color_src)
 						if(MUTANT_COLOR)
 							accessory_overlay.color = fixed_mut_color || source.dna.features["mcolor"]
+						if(DNA_COLOR)
+							accessory_overlay.color = fixed_mut_color || source.dna.features[accessory.dna_color_primary]
 						if(HAIR_COLOR)
 							accessory_overlay.color = get_fixed_hair_color(source) || source.hair_color
 						if(FACIAL_HAIR_COLOR)
@@ -678,12 +680,27 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(accessory.hasinner)
 				var/mutable_appearance/inner_accessory_overlay = mutable_appearance(accessory.icon, layer = -layer)
 				if(accessory.gender_specific)
-					inner_accessory_overlay.icon_state = "[g]_[bodypart]inner_[accessory.icon_state]_[layertext]"
+					inner_accessory_overlay.icon_state = "[g]_[bodypart]_[accessory.icon_state]_[layertext]_secondary"
 				else
-					inner_accessory_overlay.icon_state = "m_[bodypart]inner_[accessory.icon_state]_[layertext]"
+					inner_accessory_overlay.icon_state = "m_[bodypart]_[accessory.icon_state]_[layertext]_secondary"
 
 				if(accessory.center)
 					inner_accessory_overlay = center_image(inner_accessory_overlay, accessory.dimension_x, accessory.dimension_y)
+
+				if(!(HAS_TRAIT(source, TRAIT_HUSK)))
+					if(!forced_colour)
+						switch(accessory.color_src)
+							if(MUTANT_COLOR)
+								inner_accessory_overlay.color = fixed_mut_color || source.dna.features["mcolor"]
+							if(HAIR_COLOR)
+								//inner_accessory_overlay.color = get_fixed_hair_color(source) || source.hair_color
+								inner_accessory_overlay.color = RANDOM_COLOUR
+							if(FACIAL_HAIR_COLOR)
+								inner_accessory_overlay.color = get_fixed_hair_color(source) || source.facial_hair_color
+							if(EYE_COLOR)
+								inner_accessory_overlay.color = source.eye_color_left
+					else
+						inner_accessory_overlay.color = forced_colour
 
 				standing += inner_accessory_overlay
 
