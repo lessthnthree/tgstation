@@ -11,7 +11,7 @@
 	to_chat(owner, span_warning("You feel sick."))
 	var/datum/disease/advance/A = random_virus(pick(2,6),6)
 	A.carrier = TRUE
-	owner.ForceContractDisease(A, FALSE, TRUE)
+	owner.force_contract_disease(A, FALSE, TRUE)
 
 /obj/item/organ/internal/heart/gland/viral/proc/random_virus(max_symptoms, max_level)
 	if(max_symptoms > VIRUS_SYMPTOM_LIMIT)

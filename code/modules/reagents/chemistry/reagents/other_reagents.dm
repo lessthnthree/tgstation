@@ -36,19 +36,19 @@
 				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_STOMACH))
 					continue
 
-				exposed_mob.ForceContractDisease(strain)
+				exposed_mob.force_contract_disease(strain)
 			else if(methods & (INJECT|PATCH))
 				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_HEART))
 					continue
 
-				exposed_mob.ForceContractDisease(strain)
+				exposed_mob.force_contract_disease(strain)
 			else if((methods & VAPOR) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
 				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_LUNGS))
 					continue
 
-				exposed_mob.ContactContractDisease(strain)
+				exposed_mob.spread_contact_disease(strain)
 			else if((methods & TOUCH) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-				exposed_mob.ContactContractDisease(strain)
+				exposed_mob.spread_contact_disease(strain)
 
 	if(data && data["resistances"])
 		if(methods & (INGEST|INJECT)) //have to inject or ingest it. no curefoam/cheap curesprays
@@ -894,7 +894,7 @@
 /datum/reagent/aslimetoxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
 	if(methods & ~TOUCH)
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/slime(), FALSE, TRUE)
+		exposed_mob.force_contract_disease(new /datum/disease/transformation/slime(), FALSE, TRUE)
 
 /datum/reagent/gluttonytoxin
 	name = "Gluttony's Blessing"
@@ -906,7 +906,7 @@
 /datum/reagent/gluttonytoxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
 	if(reac_volume >= 1)//This prevents microdosing from infecting masses of people
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
+		exposed_mob.force_contract_disease(new /datum/disease/transformation/morph(), FALSE, TRUE)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -1426,7 +1426,7 @@
 	if(liver && HAS_TRAIT(liver, TRAIT_HUMAN_AI_METABOLISM))
 		return
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/robot(), FALSE, TRUE)
+		exposed_mob.force_contract_disease(new /datum/disease/transformation/robot(), FALSE, TRUE)
 
 /datum/reagent/xenomicrobes
 	name = "Xenomicrobes"
@@ -1438,7 +1438,7 @@
 /datum/reagent/xenomicrobes/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/xeno(), FALSE, TRUE)
+		exposed_mob.force_contract_disease(new /datum/disease/transformation/xeno(), FALSE, TRUE)
 
 /datum/reagent/fungalspores
 	name = "Tubercle Bacillus Cosmosis Microbes"
@@ -1451,7 +1451,7 @@
 /datum/reagent/fungalspores/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
+		exposed_mob.force_contract_disease(new /datum/disease/tuberculosis(), FALSE, TRUE)
 
 /datum/reagent/snail
 	name = "Agent-S"
@@ -1464,7 +1464,7 @@
 /datum/reagent/snail/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/gastrolosis(), FALSE, TRUE)
+		exposed_mob.force_contract_disease(new /datum/disease/gastrolosis(), FALSE, TRUE)
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
@@ -2584,7 +2584,7 @@
 /datum/reagent/gondola_mutation_toxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new gondola_disease, FALSE, TRUE)
+		exposed_mob.force_contract_disease(new gondola_disease, FALSE, TRUE)
 
 
 /datum/reagent/spider_extract

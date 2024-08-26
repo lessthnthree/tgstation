@@ -7,7 +7,7 @@
 	cure_chance = 50
 	agent = "H0NI<42 Virus"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	spreading_modifier = 0.75
+	spreading_modifier = 2
 	desc = "If left untreated the subject will probably drive others to insanity."
 	severity = DISEASE_SEVERITY_MEDIUM
 	required_organ = ORGAN_SLOT_TONGUE

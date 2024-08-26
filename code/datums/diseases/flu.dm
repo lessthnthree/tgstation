@@ -7,7 +7,7 @@
 	cure_chance = 5
 	agent = "H13N1 flu virion"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	spreading_modifier = 0.1
+	spreading_modifier = 3
 	desc = "If left untreated the subject will feel quite unwell."
 	severity = DISEASE_SEVERITY_MINOR
 	required_organ = ORGAN_SLOT_LUNGS

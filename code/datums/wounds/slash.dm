@@ -216,7 +216,7 @@
 		var/datum/disease/iter_disease = i
 		if(iter_disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
 			continue
-		user.ForceContractDisease(iter_disease)
+		user.force_contract_disease(iter_disease)
 
 	user.visible_message(span_notice("[user] begins licking the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You begin licking the wounds on [victim]'s [limb.plaintext_zone]..."), ignored_mobs=victim)
 	to_chat(victim, span_notice("[user] begins to lick the wounds on your [limb.plaintext_zone]."))

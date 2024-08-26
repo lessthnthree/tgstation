@@ -76,7 +76,7 @@
 		)
 		var/datum/disease/heart_failure/heart_attack = new(src)
 		heart_attack.stage_prob = 2 //Advances twice as fast
-		owner.ForceContractDisease(heart_attack)
+		owner.force_contract_disease(heart_attack)
 		owner.Unconscious(20 SECONDS)
 		qdel(src) //Victim passes out from fear, calming them down and permenantly damaging their heart.
 

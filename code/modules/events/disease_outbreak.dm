@@ -15,7 +15,7 @@
 /// Percentile for mid severity advanced virus
 #define ADV_RNG_MID 85
 /// Percentile for high vs. low transmissibility
-#define ADV_SPREAD_THRESHOLD 85
+#define ADV_SPREAD_THRESHOLD 80
 /// Admin custom low spread
 #define ADV_SPREAD_FORCED_LOW 0
 /// Admin custom med spread
@@ -42,8 +42,13 @@
 	if(!.)
 		return .
 	generate_candidates()
-	if(length(disease_candidates))
-		return TRUE
+	if(!length(disease_candidates))
+		return FALSE
+
+	if(!SSjob.has_minimum_jobs(minimum_crew = 3, jobs = JOB_GROUP_MED_CHEM, head_jobs = list(JOB_CHIEF_MEDICAL_OFFICER), head_exemp = FALSE))
+		return FALSE
+
+	return TRUE
 
 /**
  * Creates a list of people who are elligible to become disease carriers for the event
@@ -99,7 +104,7 @@
 	///The preset (classic) or generated (advanced) illness name
 	var/illness_type = ""
 	///Disease recipient candidates, passed from the round_event_control object
-	var/list/afflicted = list()
+	var/list/candidates = list()
 
 /datum/round_event/disease_outbreak/announce(fake)
 	if(!illness_type)
@@ -126,7 +131,7 @@
 
 /datum/round_event/disease_outbreak/start()
 	var/datum/round_event_control/disease_outbreak/disease_event = control
-	afflicted += disease_event.disease_candidates
+	candidates += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut() //Clean the list after use
 	if(!virus_type)
 		var/list/virus_candidates = list()
@@ -148,14 +153,19 @@
 	new_disease.carrier = TRUE
 	illness_type = new_disease.name
 
+	var/infected = 0
+	var/to_infect = 3
+	if(length(GLOB.alive_player_list) > 65)
+		to_infect = 4
+
 	var/mob/living/carbon/human/victim
-	while(length(afflicted))
-		victim = pick_n_take(afflicted)
-		if(victim.ForceContractDisease(new_disease, FALSE))
+	while(length(candidates) && infected < to_infect)
+		victim = pick_n_take(candidates)
+		if(victim.force_contract_disease(new_disease, FALSE))
 			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
 			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
 			announce_to_ghosts(victim)
-			return
+			infected++
 		CHECK_TICK //don't lag the server to death
 	if(isnull(victim))
 		message_admins("Event Disease Outbreak: Classic attempted to start, but failed to find a candidate target.")
@@ -167,7 +177,6 @@
 	category = EVENT_CATEGORY_HEALTH
 	weight = 15
 	min_players = 35 // To avoid shafting lowpop
-	earliest_start = 15 MINUTES // give the chemist a chance
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
@@ -259,7 +268,7 @@
  */
 /datum/round_event/disease_outbreak/advanced/start()
 	var/datum/round_event_control/disease_outbreak/advanced/disease_event = control
-	afflicted += disease_event.disease_candidates
+	candidates += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut()
 
 	if(isnull(max_symptoms))
@@ -284,15 +293,20 @@
 
 	illness_type = advanced_disease.name
 
+	var/infected = 0
+	var/to_infect = 3
+	if(length(GLOB.alive_player_list) > 65)
+		to_infect = 4
+
 	var/mob/living/carbon/human/victim
-	while(length(afflicted))
-		victim = pick_n_take(afflicted)
-		if(victim.ForceContractDisease(advanced_disease, FALSE))
+	while(length(candidates) && infected < to_infect)
+		victim = pick_n_take(candidates)
+		if(victim.force_contract_disease(advanced_disease, FALSE))
 			message_admins("Event triggered: Disease Outbreak: Advanced - starting with patient zero [ADMIN_LOOKUPFLW(victim)]! Details: [advanced_disease.admin_details()] sp:[advanced_disease.spread_flags] ([advanced_disease.spread_text])")
 			log_game("Event triggered: Disease Outbreak: Advanced - starting with patient zero [key_name(victim)]. Details: [advanced_disease.admin_details()] sp:[advanced_disease.spread_flags] ([advanced_disease.spread_text])")
 			log_virus("Disease Outbreak: Advanced has triggered a custom virus outbreak of [advanced_disease.admin_details()] in [victim]!")
 			announce_to_ghosts(victim)
-			return
+			infected++
 		CHECK_TICK //don't lag the server to death
 	if(isnull(victim))
 		message_admins("Event Disease Outbreak: Advanced attempted to start, but failed to find a candidate target.")
@@ -350,6 +364,29 @@
 				/datum/symptom/visionloss,
 			)
 
+	visibility_flags |= HIDDEN_MEDHUD
+	var/transmissibility = requested_transmissibility
+
+	if(isnull(transmissibility))
+		transmissibility = rand(1,100)
+
+	if(requested_transmissibility == ADV_SPREAD_FORCED_LOW) // Admin forced
+		set_spread(DISEASE_SPREAD_CONTACT_FLUIDS)
+
+	else if(requested_transmissibility == ADV_SPREAD_FORCED_HIGH || transmissibility >= ADV_SPREAD_THRESHOLD)
+		set_spread(DISEASE_SPREAD_AIRBORNE)
+		if(prob(40))
+			var/list/datum/symptom/airborne_modifiers = list(
+				/datum/symptom/cough,
+				/datum/symptom/sneeze,
+			)
+			var/datum/symptom/chosen_airborne = pick(airborne_modifiers)
+			possible_symptoms -= chosen_airborne
+			symptoms += new chosen_airborne
+
+	else
+		set_spread(DISEASE_SPREAD_CONTACT_SKIN)
+
 	var/current_severity = 0
 
 	while(symptoms.len < max_symptoms)
@@ -371,31 +408,6 @@
 		if(new_symptom.severity > current_severity)
 			current_severity = new_symptom.severity
 
-	visibility_flags |= HIDDEN_SCANNER
-	var/transmissibility = requested_transmissibility
-
-	if(isnull(transmissibility))
-		transmissibility = rand(1,100)
-
-	if(requested_transmissibility == ADV_SPREAD_FORCED_LOW) // Admin forced
-		set_spread(DISEASE_SPREAD_CONTACT_FLUIDS)
-
-	else if(requested_transmissibility == ADV_SPREAD_FORCED_HIGH) // Admin forced
-		set_spread(DISEASE_SPREAD_AIRBORNE)
-
-	//If severe enough, alert immediately on scanners, limit transmissibility
-	else if(current_severity >= ADV_DISEASE_DANGEROUS)
-		visibility_flags &= ~HIDDEN_SCANNER
-		set_spread(DISEASE_SPREAD_CONTACT_SKIN)
-
-	else if(transmissibility < ADV_SPREAD_THRESHOLD)
-		set_spread(DISEASE_SPREAD_CONTACT_SKIN)
-
-	else
-		visibility_flags &= ~HIDDEN_SCANNER
-		set_spread(DISEASE_SPREAD_AIRBORNE)
-
-
 	//Illness name from one of the symptoms
 	var/datum/symptom/picked_name = pick(symptoms)
 	name = picked_name.illness
@@ -404,15 +416,21 @@
 	//Eternal Youth for +4 to resistance and stage speed.
 	//Viral modifiers to slow down/resist or go fast and loud.
 	if(prob(66))
-		var/list/datum/symptom/possible_modifiers = list(
+		var/list/datum/symptom/viral_modifiers = list(
 			/datum/symptom/viraladaptation,
 			/datum/symptom/viralevolution,
 		)
-		var/datum/symptom/chosen_modifier = pick(possible_modifiers)
-		symptoms += new chosen_modifier
+		var/datum/symptom/chosen_viral = pick(viral_modifiers)
+		symptoms += new chosen_viral
 		symptoms += new /datum/symptom/youth
 
 	Refresh()
+
+	if(spread_flags & DISEASE_SPREAD_AIRBORNE)
+		for(var/datum/symptom/final_symptom in symptoms)
+			if(istype(final_symptom, /datum/symptom/cough) || istype(final_symptom, /datum/symptom/sneeze))
+				visibility_flags &= ~HIDDEN_MEDHUD // transmissible symptoms make it visible on medHUD as soon as they reach stage 2
+				break
 
 /**
  * Assign virus properties
@@ -430,8 +448,9 @@
 		return
 
 	incubation_time = round(world.time + (((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS))
-	properties["transmittable"] = rand(4,7)
-	spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
+	properties["transmittable"] = rand(6,9)
+	spreading_modifier = clamp(properties["transmittable"] - 5, 1, 4)
+	infectivity = clamp(21 + (spreading_modifier * 7), 28, 56)
 	cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
 	stage_prob = max(0.4 * properties["stage_rate"], 1)
 	set_severity(properties["severity"])
@@ -469,12 +488,16 @@
 		stack_trace("Advanced virus properties were empty or null!")
 		return
 
-	var/res = rand(4, 7)
-	cures = list(pick(advance_cures[res]))
-	oldres = res
-	// Get the cure name from the cure_id
-	var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
-	cure_text = cure.name
+	var/list/cures_list = advance_cures.Copy()
+	if(properties["stage_rate"] >= 7)
+		cures = list(pick_n_take(cures_list[rand(3, 7)]), pick_n_take(cures_list[rand(4, 7)]))
+		var/datum/reagent/cure_1 = GLOB.chemical_reagents_list[cures[1]]
+		var/datum/reagent/cure_2 = GLOB.chemical_reagents_list[cures[2]]
+		cure_text = "[cure_1.name] and [cure_2.name]"
+	else
+		cures = list(pick_n_take(cures_list[rand(3, 7)]))
+		var/datum/reagent/cure_1 = GLOB.chemical_reagents_list[cures[1]]
+		cure_text = cure_1.name
 
 #undef ADV_MIN_SYMPTOMS
 #undef ADV_MAX_SYMPTOMS

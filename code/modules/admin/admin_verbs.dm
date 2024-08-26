@@ -424,7 +424,7 @@ ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN
 	var/datum/disease/D = input(user, "Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!D)
 		return
-	victim.ForceContractDisease(new D, FALSE, TRUE)
+	victim.force_contract_disease(new D, FALSE, TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Give Disease")
 	log_admin("[key_name(user)] gave [key_name(victim)] the disease [D].")
 	message_admins(span_adminnotice("[key_name_admin(user)] gave [key_name_admin(victim)] the disease [D]."))

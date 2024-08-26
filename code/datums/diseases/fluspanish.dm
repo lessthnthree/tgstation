@@ -7,7 +7,7 @@
 	cure_chance = 5
 	agent = "1nqu1s1t10n flu virion"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	spreading_modifier = 0.1
+	spreading_modifier = 3
 	desc = "If left untreated the subject will burn to death for being a heretic."
 	severity = DISEASE_SEVERITY_DANGEROUS
 	required_organ = ORGAN_SLOT_LUNGS

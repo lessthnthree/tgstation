@@ -50,7 +50,7 @@
 	SIGNAL_HANDLER
 
 	for(var/datum/disease/disease in diseases)
-		receiver.ForceContractDisease(disease)
+		receiver.force_contract_disease(disease)
 
 	qdel(src) // once organ is implanted delete the infective component
 
@@ -69,7 +69,7 @@
 		if(!disease.has_required_infectious_organ(eater, ORGAN_SLOT_STOMACH))
 			continue
 
-		eater.ForceContractDisease(disease)
+		eater.force_contract_disease(disease)
 
 	try_infect(feeder, BODY_ZONE_L_ARM)
 
@@ -87,7 +87,7 @@
 		if(!disease.has_required_infectious_organ(drinker, ORGAN_SLOT_STOMACH))
 			continue
 
-		drinker.ForceContractDisease(disease)
+		drinker.force_contract_disease(disease)
 
 /datum/component/infective/proc/clean(datum/source, clean_types)
 	SIGNAL_HANDLER
@@ -134,7 +134,7 @@
 
 	var/old_bio_armor
 	if(isitem(parent))
-		//if you are putting an infective item on, it obviously will not protect you, so set its bio armor low enough that it will never block ContactContractDisease()
+		//if you are putting an infective item on, it obviously will not protect you, so set its bio armor low enough that it will never block spread_contact_disease()
 		var/obj/item/equipped_item = parent
 		old_bio_armor = equipped_item.get_armor_rating(BIO)
 		equipped_item.set_armor_rating(BIO, 0)
@@ -162,7 +162,7 @@
 
 /datum/component/infective/proc/try_infect(mob/living/L, target_zone)
 	for(var/V in diseases)
-		L.ContactContractDisease(V, target_zone)
+		L.spread_contact_disease(V, target_zone)
 
 /datum/component/infective/UnregisterFromParent()
 	. = ..()

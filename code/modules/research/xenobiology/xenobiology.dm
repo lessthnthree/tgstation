@@ -427,7 +427,7 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, span_userdanger("You feel something <i>wrong</i> inside you..."))
-			user.ForceContractDisease(new /datum/disease/transformation/slime(), FALSE, TRUE)
+			user.force_contract_disease(new /datum/disease/transformation/slime(), FALSE, TRUE)
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)

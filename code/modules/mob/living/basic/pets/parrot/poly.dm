@@ -238,7 +238,7 @@
 
 	var/datum/disease/parrot_possession/on_possession = new /datum/disease/parrot_possession
 	on_possession.set_parrot(src)
-	possessed_human.ForceContractDisease(on_possession, make_copy = FALSE, del_on_fail = TRUE)
+	possessed_human.force_contract_disease(on_possession, make_copy = FALSE, del_on_fail = TRUE)
 
 #undef POLY_DEFAULT
 #undef POLY_LONGEST_SURVIVAL

@@ -65,7 +65,7 @@
 
 /datum/instability_meltdown/decloning/meltdown(mob/living/carbon/human/victim)
 	to_chat(src, span_notice("Oh, I actually feel quite alright!"))
-	victim.ForceContractDisease(new /datum/disease/decloning) // slow acting, non-viral GBS
+	victim.force_contract_disease(new /datum/disease/decloning) // slow acting, non-viral GBS
 
 /// Makes you vomit up a random organ
 /datum/instability_meltdown/organ_vomit
@@ -90,7 +90,7 @@
 
 /datum/instability_meltdown/snail/meltdown(mob/living/carbon/human/victim)
 	to_chat(victim, span_notice("Oh, I actually feel quite alright!"))
-	victim.ForceContractDisease(new/datum/disease/gastrolosis())
+	victim.force_contract_disease(new/datum/disease/gastrolosis())
 
 /// Turns you into the ultimate lifeform
 /datum/instability_meltdown/crab

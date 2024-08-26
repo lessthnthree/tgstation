@@ -8,7 +8,7 @@
 	agent = "Rincewindus Vulgaris"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
-	spreading_modifier = 0.75
+	spreading_modifier = 2
 	bypasses_immunity = TRUE
 	desc = "Some speculate that this virus is the cause of the Space Wizard Federation's existence. \
 		Subjects affected show the signs of brain damage, yelling obscure sentences or total gibberish. \

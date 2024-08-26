@@ -917,15 +917,18 @@ SUBSYSTEM_DEF(job)
  * * head_jobs - a list of head jobs that qualify the requirement
  *
 */
-/datum/controller/subsystem/job/proc/has_minimum_jobs(crew_threshold, list/jobs = list(), list/head_jobs = list())
+/datum/controller/subsystem/job/proc/has_minimum_jobs(minimum_crew, list/jobs = list(), list/head_jobs = list(), head_exemp = TRUE)
 	var/employees = 0
 	for(var/datum/record/crew/target in GLOB.manifest.general)
 		if(target.trim in head_jobs)
-			return TRUE
+			if(head_exemp)
+				return TRUE
+			else
+				employees++
 		if(target.trim in jobs)
 			employees++
 
-	if(employees > crew_threshold)
+	if(employees >= minimum_crew)
 		return TRUE
 
 	return FALSE

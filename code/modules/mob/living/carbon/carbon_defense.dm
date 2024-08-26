@@ -148,12 +148,12 @@
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-			user.ContactContractDisease(D)
+			user.spread_contact_disease(D)
 
 	for(var/thing in user.diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-			ContactContractDisease(D)
+			spread_contact_disease(D)
 
 	if(.)
 		return TRUE
@@ -178,12 +178,12 @@
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
 			if((D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN) && prob(85))
-				user.ContactContractDisease(D)
+				user.spread_contact_disease(D)
 
 	for(var/thing in user.diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-			ContactContractDisease(D)
+			spread_contact_disease(D)
 
 	if(!user.combat_mode)
 		help_shake_act(user)
@@ -194,7 +194,7 @@
 			var/datum/disease/D = thing
 			if(D.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
-			ForceContractDisease(D)
+			force_contract_disease(D)
 		return TRUE
 
 /**

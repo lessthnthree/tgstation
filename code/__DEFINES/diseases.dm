@@ -4,11 +4,13 @@
 //Visibility Flags
 #define HIDDEN_SCANNER (1<<0)
 #define HIDDEN_PANDEMIC (1<<1)
+#define HIDDEN_MEDHUD (1<<2)
 
 //Bitfield for Visibility Flags
 DEFINE_BITFIELD(visibility_flags, list(
 	"HIDDEN_FROM_ANALYZER" = HIDDEN_SCANNER,
 	"HIDDEN_FROM_PANDEMIC" = HIDDEN_PANDEMIC,
+	"HIDDEN_FROM_MEDHUD" = HIDDEN_MEDHUD,
 ))
 
 //Disease Flags
@@ -24,6 +26,14 @@ DEFINE_BITFIELD(visibility_flags, list(
 #define DISEASE_SPREAD_CONTACT_FLUIDS (1<<3)
 #define DISEASE_SPREAD_CONTACT_SKIN (1<<4)
 #define DISEASE_SPREAD_AIRBORNE (1<<5)
+
+//Contraction methods
+#define DISEASE_CONTRACT_SPECIAL "Special"
+#define DISEASE_CONTRACT_NON_CONTAGIOUS "Non-Contagious"
+#define DISEASE_CONTRACT_BLOOD_CONTACT "Blood Contact"
+#define DISEASE_CONTRACT_FLUIDS_CONTACT "Fluids Contact"
+#define DISEASE_CONTRACT_SKIN_CONTACT "Skin Contact"
+#define DISEASE_CONTRACT_RESPIRATION "Respiration"
 
 //Bitfield for Spread Flags
 DEFINE_BITFIELD(spread_flags, list(

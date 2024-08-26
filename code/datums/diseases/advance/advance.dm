@@ -522,14 +522,14 @@
 				if(!is_station_level(H.z))
 					continue
 				if(!H.HasDisease(D))
-					found = H.ForceContractDisease(D)
+					found = H.force_contract_disease(D)
 					break
 				if(!found)
 					to_chat(user, "Could not find a valid target for the disease.")
 		else
 			H = target
 			if(istype(H) && D.infectable_biotypes & H.mob_biotypes)
-				H.ForceContractDisease(D)
+				H.force_contract_disease(D)
 			else
 				to_chat(user, "Target could not be infected. Check mob biotype compatibility or resistances.")
 				return
@@ -570,5 +570,6 @@
  *  Make virus visible to heath scanners
  */
 /datum/disease/advance/proc/make_visible()
-	visibility_flags &= ~HIDDEN_SCANNER
-	affected_mob.med_hud_set_status()
+	visibility_flags &= ~HIDDEN_MEDHUD
+	if(!isnull(affected_mob))
+		affected_mob.med_hud_set_status()

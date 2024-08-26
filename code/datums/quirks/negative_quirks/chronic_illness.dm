@@ -11,7 +11,7 @@
 
 /datum/quirk/item_quirk/chronic_illness/add(client/client_source)
 	var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
-	quirk_holder.ForceContractDisease(hms)
+	quirk_holder.force_contract_disease(hms)
 
 /datum/quirk/item_quirk/chronic_illness/add_unique(client/client_source)
 	give_item_to_holder(/obj/item/storage/pill_bottle/sansufentanyl, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK),flavour_text = "You've been provided with medication to help manage your condition. Take it regularly to avoid complications.")

@@ -49,6 +49,8 @@
 	var/infectable_biotypes = MOB_ORGANIC //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
+	/// How many mobs this copy of the disease has infected
+	var/mobs_infected = 0
 
 /datum/disease/Destroy()
 	. = ..()
@@ -63,14 +65,15 @@
 
 //add the disease with no checks
 /datum/disease/proc/infect(mob/living/infectee, make_copy = TRUE)
-	var/datum/disease/D = make_copy ? Copy() : src
-	LAZYADD(infectee.diseases, D)
-	D.affected_mob = infectee
-	SSdisease.active_diseases += D //Add it to the active diseases list, now that it's actually in a mob and being processed.
-
-	D.after_add()
+	var/datum/disease/infect_disease = make_copy ? Copy() : src
+	LAZYADD(infectee.diseases, infect_disease)
+	infect_disease.affected_mob = infectee
+	SSdisease.active_diseases += infect_disease //Add it to the active diseases list, now that it's actually in a mob and being processed.
+	infect_disease.after_add()
 	infectee.med_hud_set_status()
+	infect_disease.register_disease_signals()
 	register_disease_signals()
+	mobs_infected++
 
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
@@ -230,6 +233,8 @@
 
 /datum/disease/proc/update_stage(new_stage)
 	stage = new_stage
+	if(!isnull(affected_mob))
+		affected_mob.med_hud_set_status()
 	if(new_stage == max_stages && !(stage_peaked)) //once a virus has hit its peak, set it to have done so
 		stage_peaked = TRUE
 
@@ -258,7 +263,7 @@
 		return FALSE
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return FALSE
-	if(affected_mob.can_spread_airborne_diseases())
+	if(!affected_mob.can_spread_airborne_diseases())
 		return FALSE
 	if(!has_required_infectious_organ(affected_mob, ORGAN_SLOT_LUNGS)) //also if you lack lungs
 		return FALSE
@@ -268,6 +273,8 @@
 	if(!istype(mob_loc))
 		return FALSE
 	for(var/mob/living/carbon/to_infect in oview(spread_range, affected_mob))
+		if(!prob(infectivity))
+			continue
 		var/turf/infect_loc = to_infect.loc
 		if(!istype(infect_loc))
 			continue
@@ -332,6 +339,7 @@
 
 /datum/disease/proc/remove_disease()
 	unregister_disease_signals()
+	log_virus("[affected_mob] was cured of virus. Total infected by this variant: [mobs_infected]")
 	LAZYREMOVE(affected_mob.diseases, src) //remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
@@ -375,8 +383,7 @@
 /datum/disease/proc/on_breath(datum/source, seconds_per_tick, ...)
 	SIGNAL_HANDLER
 
-	if(SPT_PROB(infectivity * 4, seconds_per_tick))
-		airborne_spread()
+	airborne_spread()
 
 //Use this to compare severities
 /proc/get_disease_severity_value(severity)

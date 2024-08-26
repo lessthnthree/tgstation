@@ -7,7 +7,7 @@
 	return FALSE
 
 
-/mob/living/proc/CanContractDisease(datum/disease/D)
+/mob/living/proc/can_contract_disease(datum/disease/D)
 	if(stat == DEAD && !D.process_dead)
 		return FALSE
 
@@ -26,24 +26,24 @@
 	return TRUE
 
 
-/mob/living/proc/ContactContractDisease(datum/disease/D)
-	if(!CanContractDisease(D))
+/mob/living/proc/spread_contact_disease(datum/disease/disease)
+	if(!can_contract_disease(disease))
 		return FALSE
-	D.try_infect(src)
+	disease.try_infect(src)
 
 
-/mob/living/carbon/ContactContractDisease(datum/disease/disease, target_zone)
-	if(!CanContractDisease(disease))
+/mob/living/carbon/spread_contact_disease(datum/disease/disease, target_zone)
+	if(!can_contract_disease(disease))
 		return FALSE
 
 	var/passed = TRUE
-
+	var/infect_chance = clamp(42 + (disease.spreading_modifier * 7), 49, 77)
 	var/head_chance = 80
 	var/body_chance = 100
 	var/hands_chance = 35/2
 	var/feet_chance = 15/2
 
-	if(prob(15/disease.spreading_modifier))
+	if(prob(100 - infect_chance))
 		return
 
 	if(satiety>0 && prob(satiety/2)) // positive satiety makes it harder to contract the disease.
@@ -92,7 +92,7 @@
 					passed = prob(100-infecting_human.shoes.get_armor_rating(BIO))
 
 	if(passed)
-		disease.try_infect(src)
+		disease.try_infect(src, DISEASE_CONTRACT_SKIN_CONTACT)
 
 /**
  * Handle being contracted a disease via airborne transmission
@@ -102,26 +102,32 @@
 /mob/living/proc/contract_airborne_disease(datum/disease/disease)
 	if(!can_be_spread_airborne_disease())
 		return FALSE
-	if(!prob(min((50 * disease.spreading_modifier - 1), 50)))
+
+	var/infect_chance = clamp(21 + (disease.spreading_modifier * 7), 28, 56)
+	if(!prob(infect_chance))
 		return FALSE
 	if(!disease.has_required_infectious_organ(src, ORGAN_SLOT_LUNGS))
 		return FALSE
-	return ForceContractDisease(disease)
+
+	var/final_infectivity = ((infect_chance / 100) * (disease.infectivity / 100)) * 100
+
+	if(force_contract_disease(disease, TRUE, FALSE, DISEASE_CONTRACT_RESPIRATION, final_infectivity))
+		log_virus("[name] passed infection checks for [DISEASE_CONTRACT_RESPIRATION] transmission. ([final_infectivity]% chance)")
 
 //Proc to use when you 100% want to try to infect someone (ignoreing protective clothing and such), as long as they aren't immune
-/mob/living/proc/ForceContractDisease(datum/disease/D, make_copy = TRUE, del_on_fail = FALSE)
-	if(!CanContractDisease(D))
+/mob/living/proc/force_contract_disease(datum/disease/disease, make_copy = TRUE, del_on_fail = FALSE)
+	if(!can_contract_disease(disease))
 		if(del_on_fail)
-			qdel(D)
+			qdel(disease)
 		return FALSE
-	if(!D.try_infect(src, make_copy))
+	if(!disease.try_infect(src, make_copy))
 		if(del_on_fail)
-			qdel(D)
+			qdel(disease)
 		return FALSE
 	return TRUE
 
 
-/mob/living/carbon/human/CanContractDisease(datum/disease/disease)
+/mob/living/carbon/human/can_contract_disease(datum/disease/disease)
 	if(dna)
 		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !disease.bypasses_immunity)
 			return FALSE

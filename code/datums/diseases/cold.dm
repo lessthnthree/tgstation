@@ -6,7 +6,7 @@
 	cures = list(/datum/reagent/medicine/spaceacillin)
 	agent = "XY-rhinovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	spreading_modifier = 0.1
+	spreading_modifier = 4
 	spread_text = "Airborne"
 	severity = DISEASE_SEVERITY_NONTHREAT
 	required_organ = ORGAN_SLOT_LUNGS
@@ -42,7 +42,7 @@
 				to_chat(affected_mob, span_danger("Mucous runs down the back of your throat."))
 			if(SPT_PROB(0.25, seconds_per_tick) && !LAZYFIND(affected_mob.disease_resistances, /datum/disease/flu))
 				var/datum/disease/Flu = new /datum/disease/flu()
-				affected_mob.ForceContractDisease(Flu, FALSE, TRUE)
+				affected_mob.force_contract_disease(Flu, FALSE, TRUE)
 				cure()
 				return FALSE
 			if((affected_mob.body_position == LYING_DOWN && SPT_PROB(12.5, seconds_per_tick)) || SPT_PROB(0.005, seconds_per_tick))  //changed FROM prob(5) until sleeping is fixed

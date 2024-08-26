@@ -388,7 +388,7 @@
 			//Cold
 			var/datum/disease/cold = new /datum/disease/cold()
 			selected_turf.visible_message(span_userdanger("[user] looks a little under the weather!"))
-			user.ForceContractDisease(cold, FALSE, TRUE)
+			user.force_contract_disease(cold, FALSE, TRUE)
 		if(10)
 			//Nothing
 			selected_turf.visible_message(span_userdanger("Nothing seems to happen."))

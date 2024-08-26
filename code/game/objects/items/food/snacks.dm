@@ -45,7 +45,7 @@
 	if(ishuman(eater))
 		var/mob/living/carbon/human/carl = eater
 		var/datum/disease/disease = new /datum/disease/parasite()
-		carl.ForceContractDisease(disease, make_copy = FALSE, del_on_fail = TRUE)
+		carl.force_contract_disease(disease, make_copy = FALSE, del_on_fail = TRUE)
 
 /obj/item/food/candy/bronx/examine(mob/user)
 	. = ..()

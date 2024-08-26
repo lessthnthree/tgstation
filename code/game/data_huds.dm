@@ -102,10 +102,11 @@ Medical HUD! Basic mode needs suit sensors on.
 
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
-		if(!(D.visibility_flags & HIDDEN_SCANNER))
-			if(!threat || get_disease_severity_value(D.severity) > threat) //a buffing virus gets an icon
-				threat = get_disease_severity_value(D.severity)
-				severity = D.severity
+		if((D.visibility_flags & HIDDEN_SCANNER) || (D.visibility_flags & HIDDEN_MEDHUD) || D.stage <= 1)
+			return
+		if(!threat || get_disease_severity_value(D.severity) > threat) //a buffing virus gets an icon
+			threat = get_disease_severity_value(D.severity)
+			severity = D.severity
 	return severity
 
 //helper for getting the appropriate health status

@@ -170,7 +170,7 @@
 		balloon_alert(user, "interrupted!")
 		return
 	var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
-	affected_mob.ForceContractDisease(hms)
+	affected_mob.force_contract_disease(hms)
 	used = TRUE
 	inject(affected_mob, user)
 	SEND_SIGNAL(src, COMSIG_EHMS_INJECTOR_INJECTED, user, affected_mob)

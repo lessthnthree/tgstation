@@ -299,7 +299,7 @@
 		return
 	// I thought it didn't make sense for it to instantly kill you, so instead enjoy shitloads of toxin damage per bite.
 	balloon_alert(consumer, "ate it wrong!")
-	consumer.ForceContractDisease(new /datum/disease/death_sandwich_poisoning())
+	consumer.force_contract_disease(new /datum/disease/death_sandwich_poisoning())
 
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))

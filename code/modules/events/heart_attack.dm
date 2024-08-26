@@ -75,7 +75,7 @@
 		victims -= winner
 	else
 		var/datum/disease/heart_disease = new /datum/disease/heart_failure()
-		winner.ForceContractDisease(heart_disease, FALSE, TRUE)
+		winner.force_contract_disease(heart_disease, FALSE, TRUE)
 		announce_to_ghosts(winner)
 		victims -= winner
 		return TRUE
