@@ -279,14 +279,18 @@
 
 		if(properties["transmittable"] >= 11)
 			set_spread(DISEASE_SPREAD_AIRBORNE)
+			spreading_modifier = clamp(properties["transmittable"] - 10, 1, 5)
+			infectivity = clamp(21 + (spreading_modifier * 7), 28, 56)
 		else if(properties["transmittable"] >= 7)
 			set_spread(DISEASE_SPREAD_CONTACT_SKIN)
+			spreading_modifier = clamp(properties["transmittable"] - 6, 1, 4)
 		else if(properties["transmittable"] >= 3)
 			set_spread(DISEASE_SPREAD_CONTACT_FLUIDS)
+			spreading_modifier = clamp(properties["transmittable"] - 2, 1, 4)
 		else
 			set_spread(DISEASE_SPREAD_BLOOD)
+			spreading_modifier = clamp(properties["transmittable"], 1, 4)
 
-		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 1, 10) // can be between 1 and 10
 		stage_prob = max(0.3 * properties["stage_rate"], 1)
 		set_severity(round(properties["severity"]), 1)
