@@ -112,6 +112,9 @@
 		to_chat(user, span_notice("You repair the suit sensors on [src] with [cabling]."))
 		cabling.use(1)
 		has_sensor = HAS_SENSORS
+		if(ishuman(loc))
+			var/mob/living/carbon/human/parent_mob = loc
+			parent_mob.med_hud_set_status()
 		return TRUE
 
 	if(istype(attacking_item, /obj/item/clothing/accessory))
@@ -133,6 +136,9 @@
 		has_sensor = BROKEN_SENSORS
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
 		has_sensor = HAS_SENSORS
+	if(ishuman(loc))
+		var/mob/living/carbon/human/parent_mob = loc
+		parent_mob.med_hud_set_status()
 	update_appearance()
 
 /obj/item/clothing/under/emp_act(severity)
@@ -144,9 +150,10 @@
 
 	if(severity <= EMP_HEAVY)
 		has_sensor = BROKEN_SENSORS
-		if(ismob(loc))
-			var/mob/M = loc
-			to_chat(M,span_warning("[src]'s sensors short out!"))
+		if(ishuman(loc))
+			var/mob/living/carbon/human/parent_mob = loc
+			parent_mob.med_hud_set_status()
+			to_chat(parent_mob, span_warning("[src]'s sensors short out!"))
 
 	else
 		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)

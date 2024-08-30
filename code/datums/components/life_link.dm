@@ -141,6 +141,11 @@
 		holder.icon_state = "huddead"
 	else
 		holder.icon_state = "hudhealthy"
+		if(ishuman(mob_parent))
+			var/mob/living/carbon/human/crew = mob_parent
+			var/obj/item/clothing/under/uniform = crew.w_uniform
+			if(uniform && uniform.has_sensor == BROKEN_SENSORS)
+				holder.icon_state = "hudnosensor"
 
 /// When our status tab updates, draw how much HP our host has in there
 /datum/component/life_link/proc/on_status_tab_updated(mob/living/source, list/items)
