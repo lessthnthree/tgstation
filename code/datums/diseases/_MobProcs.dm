@@ -43,7 +43,7 @@
 	var/hands_chance = 35/2
 	var/feet_chance = 15/2
 
-	if(prob(100 - infect_chance))
+	if(!prob(infect_chance))
 		return
 
 	if(satiety>0 && prob(satiety/2)) // positive satiety makes it harder to contract the disease.
