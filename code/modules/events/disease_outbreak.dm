@@ -133,9 +133,6 @@
 		illness_type = initial(fake_virus.name)
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "[illness_type] Alert", ANNOUNCER_OUTBREAK7)
 
-/datum/round_event/disease_outbreak/setup()
-	announce_when = CLASSIC_ANNOUNCE_DELAY
-
 /datum/round_event/disease_outbreak/start()
 	var/datum/round_event_control/disease_outbreak/disease_event = control
 	candidates += disease_event.disease_candidates
@@ -333,9 +330,6 @@
 	copy_type = /datum/disease/advance
 	bypasses_disease_recovery = TRUE
 	event_disease = TRUE
-
-/datum/round_event/disease_outbreak/advance/setup()
-	announce_when = ADV_ANNOUNCE_DELAY
 
 /**
  * Generate advanced virus
