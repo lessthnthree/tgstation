@@ -109,13 +109,13 @@
 	if(!disease.has_required_infectious_organ(src, ORGAN_SLOT_LUNGS))
 		return FALSE
 
-	var/final_infectivity = ((infect_chance / 100) * (disease.infectivity / 100)) * 100
+	var/final_infectivity = ((infect_chance / 100) * (disease.infectivity / 100)) * 100 // for friendly logging
 
 	if(force_contract_disease(disease, TRUE, FALSE, DISEASE_CONTRACT_RESPIRATION, final_infectivity))
 		log_virus("[name] passed infection checks for [DISEASE_CONTRACT_RESPIRATION] transmission. ([final_infectivity]% chance)")
 
 //Proc to use when you 100% want to try to infect someone (ignoreing protective clothing and such), as long as they aren't immune
-/mob/living/proc/force_contract_disease(datum/disease/disease, make_copy = TRUE, del_on_fail = FALSE)
+/mob/living/proc/force_contract_disease(datum/disease/disease, make_copy = TRUE, del_on_fail = FALSE, infect_vector, final_infectivity)
 	if(!can_contract_disease(disease))
 		if(del_on_fail)
 			qdel(disease)

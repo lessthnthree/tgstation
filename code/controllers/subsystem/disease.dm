@@ -2,7 +2,10 @@ SUBSYSTEM_DEF(disease)
 	name = "Disease"
 	flags = SS_NO_FIRE
 
-	var/list/active_diseases = list() //List of Active disease in all mobs; purely for quick referencing.
+	/// List of Active disease in all mobs; purely for quick referencing.
+	var/list/active_diseases = list()
+	/// List of Event disease in all mobs; purely for quick referencing.
+	var/list/event_diseases = list()
 	var/list/diseases
 	var/list/archive_diseases = list()
 
@@ -20,12 +23,12 @@ SUBSYSTEM_DEF(disease)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/disease/stat_entry(msg)
-	msg = "P:[length(active_diseases)]"
+	msg = "P:[length(active_diseases)] | EV:[length(event_diseases)]"
 	return ..()
 
 /datum/controller/subsystem/disease/proc/get_disease_name(id)
-	var/datum/disease/advance/A = archive_diseases[id]
-	if(A.name)
-		return A.name
+	var/datum/disease/advance/archive = archive_diseases[id]
+	if(archive.name)
+		return archive.name
 	else
 		return "Unknown"

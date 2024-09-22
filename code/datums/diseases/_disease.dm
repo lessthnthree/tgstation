@@ -17,8 +17,6 @@
 	var/max_stages = 0
 	/// The probability of this infection advancing a stage every second the cure is not present.
 	var/stage_prob = 2
-	/// How long this infection incubates (non-visible) before revealing itself
-	var/incubation_time
 	/// Has the virus hit its limit?
 	var/stage_peaked = FALSE
 	/// How many cycles has the virus been at its peak?
@@ -49,13 +47,23 @@
 	var/infectable_biotypes = MOB_ORGANIC //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
+	/// Is this disease part of a random event
+	var/event_disease = FALSE
+	/// Does it skip self recovery process, such as event diseases
+	var/bypasses_disease_recovery = FALSE
+	/// Unique ID for this specific instance of the disease
+	var/variant_id
 	/// How many mobs this copy of the disease has infected
-	var/mobs_infected = 0
+	var/variant_infections = 0
+	/// World time when this variant began its infection
+	var/start_time
 
 /datum/disease/Destroy()
 	. = ..()
 	if(affected_mob)
 		remove_disease()
+	if(event_disease)
+		SSdisease.event_diseases -= src
 	SSdisease.active_diseases.Remove(src)
 
 //add this disease if the host does not already have too many
@@ -66,17 +74,24 @@
 //add the disease with no checks
 /datum/disease/proc/infect(mob/living/infectee, make_copy = TRUE)
 	var/datum/disease/infect_disease = make_copy ? Copy() : src
+	if(infect_disease.affected_mob)
+		stack_trace("Disease [infect_disease.variant_id] [infect_disease.name] tried to infect [infectee] while already bound to an affected mob [infect_disease.affected_mob]!")
+		log_virus("Disease [infect_disease.variant_id] [infect_disease.name] tried to infect [infectee] while already bound to an affected mob [infect_disease.affected_mob]!")
+		return
+	infect_disease.variant_id = assign_random_name()
+	infect_disease.start_time = world.time
 	LAZYADD(infectee.diseases, infect_disease)
 	infect_disease.affected_mob = infectee
 	SSdisease.active_diseases += infect_disease //Add it to the active diseases list, now that it's actually in a mob and being processed.
+	if(event_disease)
+		SSdisease.event_diseases += infect_disease
 	infect_disease.after_add()
 	infectee.med_hud_set_status()
 	infect_disease.register_disease_signals()
-	register_disease_signals()
-	mobs_infected++
+	variant_infections++
 
 	var/turf/source_turf = get_turf(infectee)
-	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
+	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]. Total infected by this variant: [variant_infections]")
 
 /// Updates the spread flags set, ensuring signals are updated as necessary
 /datum/disease/proc/update_spread_flags(new_flags)
@@ -131,7 +146,7 @@
 	if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
 		update_stage(min(stage + 1, max_stages))
 
-	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
+	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE && bypasses_disease_recovery != TRUE)
 		switch(severity)
 			if(DISEASE_SEVERITY_POSITIVE) //good viruses don't go anywhere after hitting max stage - you can try to get rid of them by sleeping earlier
 				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_POSITIVE) //because of the way we later check for recovery_prob, we need to floor this at least equal to the scaling to avoid infinitely getting less likely to cure
@@ -232,6 +247,8 @@
 	return !carrier
 
 /datum/disease/proc/update_stage(new_stage)
+	if(new_stage > stage && !isnull(affected_mob))
+		log_virus("[log_prefix()] [affected_mob.name] stage advance [stage] > [new_stage]. Time elapsed: [DisplayTimeText(world.time - start_time)] @ Stage speed [stage_prob]")
 	stage = new_stage
 	if(!isnull(affected_mob))
 		affected_mob.med_hud_set_status()
@@ -317,9 +334,9 @@
 /datum/disease/proc/Copy()
 	//note that stage is not copied over - the copy starts over at stage 1
 	var/static/list/copy_vars = list("name", "visibility_flags", "disease_flags", "spread_flags", "form", "desc", "agent", "spread_text",
-									"cure_text", "max_stages", "stage_prob", "incubation_time", "viable_mobtypes", "cures", "infectivity", "cure_chance",
+									"cure_text", "max_stages", "stage_prob", "viable_mobtypes", "cures", "infectivity", "cure_chance",
 									"required_organ", "bypasses_immunity", "spreading_modifier", "severity", "needs_all_cures", "strain_data",
-									"infectable_biotypes", "process_dead")
+									"infectable_biotypes", "process_dead", "event_disease")
 
 	var/datum/disease/D = copy_type ? new copy_type() : new type()
 	for(var/V in copy_vars)
@@ -339,7 +356,7 @@
 
 /datum/disease/proc/remove_disease()
 	unregister_disease_signals()
-	log_virus("[affected_mob] was cured of virus. Total infected by this variant: [mobs_infected]")
+	log_virus("[affected_mob] was cured of virus. Total infected by this variant: [variant_infections]")
 	LAZYREMOVE(affected_mob.diseases, src) //remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
