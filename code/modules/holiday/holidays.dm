@@ -707,7 +707,7 @@
 	name = CHRISTMAS
 	begin_day = 23
 	begin_month = DECEMBER
-	end_day = 27
+	end_day = 24
 	holiday_hat = /obj/item/clothing/head/costume/santa
 	mail_holiday = TRUE
 	holiday_colors = list(
