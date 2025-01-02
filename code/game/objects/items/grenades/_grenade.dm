@@ -17,8 +17,8 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	max_integrity = 40
-	pickup_sound = 'sound/items/grenade_pick_up.ogg'
-	drop_sound = 'sound/items/grenade_drop.ogg'
+	pickup_sound = 'sound/items/handling/grenade/grenade_pick_up.ogg'
+	drop_sound = 'sound/items/handling/grenade/grenade_drop.ogg'
 	sound_vary = TRUE
 	/// Bitfields which prevent the grenade from detonating if set. Includes ([GRENADE_DUD]|[GRENADE_USED])
 	var/dud_flags = NONE
@@ -155,11 +155,11 @@
 	if(shrapnel_type && shrapnel_radius)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
-	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
+	playsound(src, 'sound/items/weapons/armbomb.ogg', volume, TRUE)
 	if(istype(user))
 		user.add_mob_memory(/datum/memory/bomb_planted, antagonist = src)
 	active = TRUE
-	icon_state = initial(icon_state) + "_active"
+	icon_state = (base_icon_state || initial(icon_state)) + "_active"
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
 	addtimer(CALLBACK(src, PROC_REF(detonate)), isnull(delayoverride)? det_time : delayoverride)
 
@@ -255,7 +255,7 @@
 	if(det_time == 0)
 		det_time = "Instant"
 	else
-		det_time = num2text(det_time * 0.1) 
+		det_time = num2text(det_time * 0.1)
 
 	var/old_selection = possible_fuse_time.Find(det_time) //Position of det_time in the list
 	if(old_selection >= possible_fuse_time.len)

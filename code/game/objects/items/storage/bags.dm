@@ -278,6 +278,9 @@
 		seedify(plant, 1)
 	return CLICK_ACTION_SUCCESS
 
+/obj/item/storage/bag/plants/cyborg
+	name = "cyborg plant bag"
+
 // -----------------------------
 //        Sheet Snatcher
 // -----------------------------
@@ -396,9 +399,9 @@
 		do_scatter(tray_item)
 
 	if(prob(50))
-		playsound(M, 'sound/items/trayhit1.ogg', 50, TRUE)
+		playsound(M, 'sound/items/trayhit/trayhit1.ogg', 50, TRUE)
 	else
-		playsound(M, 'sound/items/trayhit2.ogg', 50, TRUE)
+		playsound(M, 'sound/items/trayhit/trayhit2.ogg', 50, TRUE)
 
 	if(ishuman(M))
 		if(prob(10))

@@ -191,30 +191,30 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	set waitfor = FALSE
 	message_admins("[key_name_admin(owner)][ADMIN_FLW(owner)] has activated AI Doomsday.")
 	var/pass = prob(10) ? "******" : "hunter2"
-	to_chat(owner, "<span class='small boldannounce'>run -o -a 'selfdestruct'</span>")
+	to_chat(owner, "<span class='small bolddanger'>run -o -a 'selfdestruct'</span>")
 	sleep(0.5 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, "<span class='small boldannounce'>Running executable 'selfdestruct'...</span>")
+	to_chat(owner, "<span class='small bolddanger'>Running executable 'selfdestruct'...</span>")
 	sleep(rand(10, 30))
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	owner.playsound_local(owner, 'sound/misc/bloblarm.ogg', 50, 0, use_reverb = FALSE)
+	owner.playsound_local(owner, 'sound/announcer/alarm/bloblarm.ogg', 50, 0, use_reverb = FALSE)
 	to_chat(owner, span_userdanger("!!! UNAUTHORIZED SELF-DESTRUCT ACCESS !!!"))
-	to_chat(owner, span_boldannounce("This is a class-3 security violation. This incident will be reported to Central Command."))
+	to_chat(owner, span_bolddanger("This is a class-3 security violation. This incident will be reported to Central Command."))
 	for(var/i in 1 to 3)
 		sleep(2 SECONDS)
 		if(QDELETED(owner) || !isturf(owner_AI.loc))
 			active = FALSE
 			return
-		to_chat(owner, span_boldannounce("Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%"))
+		to_chat(owner, span_bolddanger("Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%"))
 	sleep(0.3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' [pass]</span>")
+	to_chat(owner, "<span class='small bolddanger'>auth 'akjv9c88asdf12nb' [pass]</span>")
 	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0, use_reverb = FALSE)
 	sleep(3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
@@ -227,34 +227,34 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Arm self-destruct device? (Y/N)"))
-	owner.playsound_local(owner, 'sound/misc/compiler-stage1.ogg', 50, 0, use_reverb = FALSE)
+	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage1.ogg', 50, 0, use_reverb = FALSE)
 	sleep(2 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, "<span class='small boldannounce'>Y</span>")
+	to_chat(owner, "<span class='small bolddanger'>Y</span>")
 	sleep(1.5 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Confirm arming of self-destruct device? (Y/N)"))
-	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
+	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(1 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, "<span class='small boldannounce'>Y</span>")
+	to_chat(owner, "<span class='small bolddanger'>Y</span>")
 	sleep(rand(15, 25))
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Please repeat password to confirm."))
-	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
+	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(1.4 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, "<span class='small boldannounce'>[pass]</span>")
+	to_chat(owner, "<span class='small bolddanger'>[pass]</span>")
 	sleep(4 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/sec_left = seconds_remaining()
 	if(!sec_left)
 		timing = FALSE
-		sound_to_playing_players('sound/machines/alarm.ogg')
+		sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_cinematic), /datum/cinematic/malf, world, CALLBACK(src, PROC_REF(trigger_doomsday))), 10 SECONDS)
 
 	else if(world.time >= next_announce)
@@ -381,7 +381,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/lockdown
 	unlock_text = span_notice("You upload a sleeper trojan into the door control systems. You can send a signal to set it off at any time.")
-	unlock_sound = 'sound/machines/boltsdown.ogg'
+	unlock_sound = 'sound/machines/airlock/boltsdown.ogg'
 
 /datum/action/innate/ai/lockdown
 	name = "Lockdown"
@@ -430,7 +430,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	cost = 30
 	power_type = /datum/action/innate/ai/ranged/override_machine
 	unlock_text = span_notice("You procure a virus from the Space Dark Web and distribute it to the station's machines.")
-	unlock_sound = 'sound/machines/airlock_alien_prying.ogg'
+	unlock_sound = 'sound/machines/airlock/airlock_alien_prying.ogg'
 
 /datum/action/innate/ai/ranged/override_machine
 	name = "Override Machine"
@@ -445,12 +445,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	. = ..()
 	desc = "[desc] It has [uses] use\s remaining."
 
-/datum/action/innate/ai/ranged/override_machine/do_ability(mob/living/caller, atom/clicked_on)
-	if(caller.incapacitated)
-		unset_ranged_ability(caller)
+/datum/action/innate/ai/ranged/override_machine/do_ability(mob/living/clicker, atom/clicked_on)
+	if(clicker.incapacitated)
+		unset_ranged_ability(clicker)
 		return FALSE
 	if(!ismachinery(clicked_on))
-		to_chat(caller, span_warning("You can only animate machines!"))
+		to_chat(clicker, span_warning("You can only animate machines!"))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on
 
@@ -459,14 +459,14 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		clicked_machine = clicked_turret.parent_turret
 
 	if((clicked_machine.resistance_flags & INDESTRUCTIBLE) || is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
-		to_chat(caller, span_warning("That machine can't be overridden!"))
+		to_chat(clicker, span_warning("That machine can't be overridden!"))
 		return FALSE
 
-	caller.playsound_local(caller, 'sound/misc/interference.ogg', 50, FALSE, use_reverb = FALSE)
+	clicker.playsound_local(clicker, 'sound/misc/interference.ogg', 50, FALSE, use_reverb = FALSE)
 
 	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
-	addtimer(CALLBACK(src, PROC_REF(animate_machine), caller, clicked_machine), 5 SECONDS) //kabeep!
-	unset_ranged_ability(caller, span_danger("Sending override signal..."))
+	addtimer(CALLBACK(src, PROC_REF(animate_machine), clicker, clicked_machine), 5 SECONDS) //kabeep!
+	unset_ranged_ability(clicker, span_danger("Sending override signal..."))
 	adjust_uses(-1) //adjust after we unset the active ability since we may run out of charges, thus deleting the ability
 
 	if(uses)
@@ -474,11 +474,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		build_all_button_icons()
 	return TRUE
 
-/datum/action/innate/ai/ranged/override_machine/proc/animate_machine(mob/living/caller, obj/machinery/to_animate)
+/datum/action/innate/ai/ranged/override_machine/proc/animate_machine(mob/living/clicker, obj/machinery/to_animate)
 	if(QDELETED(to_animate))
 		return
 
-	new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(to_animate), to_animate, caller, TRUE)
+	new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(to_animate), to_animate, clicker, TRUE)
 
 /// Destroy RCDs: Detonates all non-cyborg RCDs on the station.
 /datum/ai_module/malf/destructive/destroy_rcd
@@ -503,7 +503,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			var/obj/item/construction/rcd/RCD = I
 			RCD.detonate_pulse()
 	to_chat(owner, span_danger("RCD detonation pulse emitted."))
-	owner.playsound_local(owner, 'sound/machines/twobeep.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/machines/beep/twobeep.ogg', 50, 0)
 
 /// Overload Machine: Allows the AI to overload a machine, detonating it after a delay. Two uses per purchase.
 /datum/ai_module/malf/destructive/overload_machine
@@ -527,23 +527,23 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	..()
 	desc = "[desc] It has [uses] use\s remaining."
 
-/datum/action/innate/ai/ranged/overload_machine/proc/detonate_machine(mob/living/caller, obj/machinery/to_explode)
+/datum/action/innate/ai/ranged/overload_machine/proc/detonate_machine(mob/living/clicker, obj/machinery/to_explode)
 	if(QDELETED(to_explode))
 		return
 
 	var/turf/machine_turf = get_turf(to_explode)
-	message_admins("[ADMIN_LOOKUPFLW(caller)] overloaded [to_explode.name] ([to_explode.type]) at [ADMIN_VERBOSEJMP(machine_turf)].")
-	caller.log_message("overloaded [to_explode.name] ([to_explode.type])", LOG_ATTACK)
+	message_admins("[ADMIN_LOOKUPFLW(clicker)] overloaded [to_explode.name] ([to_explode.type]) at [ADMIN_VERBOSEJMP(machine_turf)].")
+	clicker.log_message("overloaded [to_explode.name] ([to_explode.type])", LOG_ATTACK)
 	explosion(to_explode, heavy_impact_range = 2, light_impact_range = 3)
 	if(!QDELETED(to_explode)) //to check if the explosion killed it before we try to delete it
 		qdel(to_explode)
 
-/datum/action/innate/ai/ranged/overload_machine/do_ability(mob/living/caller, atom/clicked_on)
-	if(caller.incapacitated)
-		unset_ranged_ability(caller)
+/datum/action/innate/ai/ranged/overload_machine/do_ability(mob/living/clicker, atom/clicked_on)
+	if(clicker.incapacitated)
+		unset_ranged_ability(clicker)
 		return FALSE
 	if(!ismachinery(clicked_on))
-		to_chat(caller, span_warning("You can only overload machines!"))
+		to_chat(clicker, span_warning("You can only overload machines!"))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on
 
@@ -552,18 +552,18 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		clicked_machine = clicked_turret.parent_turret
 
 	if((clicked_machine.resistance_flags & INDESTRUCTIBLE) || is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
-		to_chat(caller, span_warning("You cannot overload that device!"))
+		to_chat(clicker, span_warning("You cannot overload that device!"))
 		return FALSE
 
-	caller.playsound_local(caller, SFX_SPARKS, 50, 0)
+	clicker.playsound_local(clicker, SFX_SPARKS, 50, 0)
 	adjust_uses(-1)
 	if(uses)
 		desc = "[initial(desc)] It has [uses] use\s remaining."
 		build_all_button_icons()
 
 	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
-	addtimer(CALLBACK(src, PROC_REF(detonate_machine), caller, clicked_machine), 5 SECONDS) //kaboom!
-	unset_ranged_ability(caller, span_danger("Overcharging machine..."))
+	addtimer(CALLBACK(src, PROC_REF(detonate_machine), clicker, clicked_machine), 5 SECONDS) //kaboom!
+	unset_ranged_ability(clicker, span_danger("Overcharging machine..."))
 	return TRUE
 
 /// Blackout: Overloads a random number of lights across the station. Three uses.
@@ -607,7 +607,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	cost = 20
 	power_type = /datum/action/innate/ai/honk
 	unlock_text = span_notice("You upload a sinister sound file into every intercom...")
-	unlock_sound = 'sound/items/airhorn.ogg'
+	unlock_sound = 'sound/items/airhorn/airhorn.ogg'
 
 /datum/action/innate/ai/honk
 	name = "Percussive Intercomm Interference"
@@ -622,7 +622,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		if(!found_intercom.is_on() || !found_intercom.get_listening() || found_intercom.wires.is_cut(WIRE_RX)) //Only operating intercoms play the honk
 			continue
 		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
-		playsound(found_intercom, 'sound/items/airhorn.ogg', 100, TRUE)
+		playsound(found_intercom, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
 		for(var/mob/living/carbon/honk_victim in ohearers(6, found_intercom))
 			var/turf/victim_turf = get_turf(honk_victim)
 			if(isspaceturf(victim_turf) && !victim_turf.Adjacent(found_intercom)) //Prevents getting honked in space
@@ -730,7 +730,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			continue
 		AA.obj_flags |= EMAGGED
 	to_chat(owner, span_notice("All air alarm safeties on the station have been overridden. Air alarms may now use extremely dangerous environmental modes."))
-	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/machines/terminal/terminal_off.ogg', 50, 0)
 
 /// Thermal Sensor Override: Unlocks the ability to disable all fire alarms from doing their job.
 /datum/ai_module/malf/utility/break_fire_alarms
@@ -742,7 +742,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	power_type = /datum/action/innate/ai/break_fire_alarms
 	unlock_text = span_notice("You replace the thermal sensing capabilities of all fire alarms with a manual override, \
 		allowing you to turn them off at will.")
-	unlock_sound = 'sound/machines/FireAlarm1.ogg'
+	unlock_sound = 'sound/machines/fire_alarm/FireAlarm1.ogg'
 
 /datum/action/innate/ai/break_fire_alarms
 	name = "Override Thermal Sensors"
@@ -761,7 +761,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			continue
 		firelock.emag_act(owner_AI, src)
 	to_chat(owner, span_notice("All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized."))
-	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/machines/terminal/terminal_off.ogg', 50, 0)
 
 /// Disable Emergency Lights
 /datum/ai_module/malf/utility/emergency_lights
@@ -799,7 +799,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/reactivate_cameras
 	unlock_text = span_notice("You deploy nanomachines to the cameranet.")
-	unlock_sound = 'sound/items/wirecutter.ogg'
+	unlock_sound = 'sound/items/tools/wirecutter.ogg'
 
 /datum/action/innate/ai/reactivate_cameras
 	name = "Reactivate Cameras"
@@ -824,7 +824,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			fixed_cameras++
 			uses-- //Not adjust_uses() so it doesn't automatically delete or show a message
 	to_chat(owner, span_notice("Diagnostic complete! Cameras reactivated: <b>[fixed_cameras]</b>. Reactivations remaining: <b>[uses]</b>."))
-	owner.playsound_local(owner, 'sound/items/wirecutter.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/items/tools/wirecutter.ogg', 50, 0)
 	adjust_uses(0, TRUE) //Checks the uses remaining
 	if(QDELETED(src) || !uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		return
@@ -839,7 +839,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	cost = 35 //Decent price for omniscience!
 	upgrade = TRUE
 	unlock_text = span_notice("OTA firmware distribution complete! Cameras upgraded: CAMSUPGRADED. Light amplification system online.")
-	unlock_sound = 'sound/items/rped.ogg'
+	unlock_sound = 'sound/items/tools/rped.ogg'
 
 /datum/ai_module/malf/upgrade/upgrade_cameras/upgrade(mob/living/silicon/ai/AI)
 	// Sets up nightvision
@@ -876,7 +876,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	cost = 30
 	upgrade = TRUE
 	unlock_text = span_notice("You establish a power diversion to your turrets, upgrading their health and damage.")
-	unlock_sound = 'sound/items/rped.ogg'
+	unlock_sound = 'sound/items/tools/rped.ogg'
 
 /datum/ai_module/malf/upgrade/upgrade_turrets/upgrade(mob/living/silicon/ai/AI)
 	for(var/obj/machinery/porta_turret/ai/turret as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/porta_turret/ai))
@@ -884,7 +884,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		turret.max_integrity = 200
 		turret.repair_damage(200)
 		turret.lethal_projectile = /obj/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
-		turret.lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
+		turret.lethal_projectile_sound = 'sound/items/weapons/lasercannonfire.ogg'
 
 /// Enhanced Surveillance: Enables AI to hear conversations going on near its active vision.
 /datum/ai_module/malf/upgrade/eavesdrop
@@ -894,7 +894,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	cost = 30
 	upgrade = TRUE
 	unlock_text = span_notice("OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.")
-	unlock_sound = 'sound/items/rped.ogg'
+	unlock_sound = 'sound/items/tools/rped.ogg'
 
 /datum/ai_module/malf/upgrade/eavesdrop/upgrade(mob/living/silicon/ai/AI)
 	if(AI.eyeobj)
@@ -904,13 +904,13 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/ai_module/malf/upgrade/mecha_domination
 	name = "Unlock Mech Domination"
 	description = "Allows you to hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. \
-		Do not allow the mech to leave the station's vicinity or allow it to be destroyed. \
-		Upgrade is done immediately upon purchase."
+		Upgrade is done immediately upon purchase. Do not allow the mech to leave the station's vicinity or allow it to be destroyed. \
+		If your core is destroyed, you will be lose connection with the Doomsday Device and the countdown will cease."
 	cost = 30
 	upgrade = TRUE
 	unlock_text = span_notice("Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. \
-		Loss of signal will result in total system lockout.</b>")
-	unlock_sound = 'sound/mecha/nominal.ogg'
+		Loss of signal will result in total system lockout. If your inactive core is destroyed, you will be lose connection with the Doomsday Device and the countdown will cease.</b>")
+	unlock_sound = 'sound/vehicles/mecha/nominal.ogg'
 
 /datum/ai_module/malf/upgrade/mecha_domination/upgrade(mob/living/silicon/ai/AI)
 	AI.can_dominate_mechs = TRUE //Yep. This is all it does. Honk!
@@ -922,7 +922,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/voice_changer
 	unlock_text = span_notice("OTA firmware distribution complete! Voice changer online.")
-	unlock_sound = 'sound/items/rped.ogg'
+	unlock_sound = 'sound/items/tools/rped.ogg'
 
 /datum/action/innate/ai/voice_changer
 	name="Voice Changer"
@@ -1079,7 +1079,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	. = ..()
 	desc = "[desc] It has [uses] use\s remaining."
 
-/datum/action/innate/ai/ranged/emag/do_ability(mob/living/caller, atom/clicked_on)
+/datum/action/innate/ai/ranged/emag/do_ability(mob/living/clicker, atom/clicked_on)
 
 	// Only things with of or subtyped of any of these types may be remotely emagged
 	var/static/list/compatable_typepaths = list(
@@ -1091,59 +1091,59 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		/mob/living/silicon,
 	)
 
-	if (!isAI(caller))
+	if (!isAI(clicker))
 		return FALSE
 
-	var/mob/living/silicon/ai/ai_caller = caller
+	var/mob/living/silicon/ai/ai_clicker = clicker
 
-	if(ai_caller.incapacitated)
-		unset_ranged_ability(caller)
+	if(ai_clicker.incapacitated)
+		unset_ranged_ability(clicker)
 		return FALSE
 
-	if (!ai_caller.can_see(clicked_on))
-		clicked_on.balloon_alert(ai_caller, "can't see!")
+	if (!ai_clicker.can_see(clicked_on))
+		clicked_on.balloon_alert(ai_clicker, "can't see!")
 		return FALSE
 
 	if (ismachinery(clicked_on))
 		var/obj/machinery/clicked_machine = clicked_on
 		if (!clicked_machine.is_operational)
-			clicked_machine.balloon_alert(ai_caller, "not operational!")
+			clicked_machine.balloon_alert(ai_clicker, "not operational!")
 			return FALSE
 
 	if (!(is_type_in_list(clicked_on, compatable_typepaths)))
-		clicked_on.balloon_alert(ai_caller, "incompatable!")
+		clicked_on.balloon_alert(ai_clicker, "incompatable!")
 		return FALSE
 
 	if (istype(clicked_on, /obj/machinery/door/airlock)) // I HATE THIS CODE SO MUCHHH
 		var/obj/machinery/door/airlock/clicked_airlock = clicked_on
-		if (!clicked_airlock.canAIControl(ai_caller))
-			clicked_airlock.balloon_alert(ai_caller, "unable to interface!")
+		if (!clicked_airlock.canAIControl(ai_clicker))
+			clicked_airlock.balloon_alert(ai_clicker, "unable to interface!")
 			return FALSE
 
 	if (istype(clicked_on, /obj/machinery/airalarm))
 		var/obj/machinery/airalarm/alarm = clicked_on
 		if (alarm.aidisabled)
-			alarm.balloon_alert(ai_caller, "unable to interface!")
+			alarm.balloon_alert(ai_clicker, "unable to interface!")
 			return FALSE
 
 	if (istype(clicked_on, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/clicked_apc = clicked_on
 		if (clicked_apc.aidisabled)
-			clicked_apc.balloon_alert(ai_caller, "unable to interface!")
+			clicked_apc.balloon_alert(ai_clicker, "unable to interface!")
 			return FALSE
 
-	if (!clicked_on.emag_act(ai_caller))
-		to_chat(ai_caller, span_warning("Hostile software insertion failed!")) // lets not overlap balloon alerts
+	if (!clicked_on.emag_act(ai_clicker))
+		to_chat(ai_clicker, span_warning("Hostile software insertion failed!")) // lets not overlap balloon alerts
 		return FALSE
 
-	to_chat(ai_caller, span_notice("Software package successfully injected."))
+	to_chat(ai_clicker, span_notice("Software package successfully injected."))
 
 	adjust_uses(-1)
 	if(uses)
 		desc = "[initial(desc)] It has [uses] use\s remaining."
 		build_all_button_icons()
 	else
-		unset_ranged_ability(ai_caller, span_warning("Out of uses!"))
+		unset_ranged_ability(ai_clicker, span_warning("Out of uses!"))
 
 	return TRUE
 
@@ -1176,35 +1176,35 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	. = ..()
 	desc = "[desc] It has [uses] use\s remaining."
 
-/datum/action/innate/ai/ranged/core_tilt/do_ability(mob/living/caller, atom/clicked_on)
+/datum/action/innate/ai/ranged/core_tilt/do_ability(mob/living/clicker, atom/clicked_on)
 
 	if (!COOLDOWN_FINISHED(src, time_til_next_tilt))
-		caller.balloon_alert(caller, "on cooldown!")
+		clicker.balloon_alert(clicker, "on cooldown!")
 		return FALSE
 
-	if (!isAI(caller))
+	if (!isAI(clicker))
 		return FALSE
-	var/mob/living/silicon/ai/ai_caller = caller
+	var/mob/living/silicon/ai/ai_clicker = clicker
 
-	if (ai_caller.incapacitated || !isturf(ai_caller.loc))
+	if (ai_clicker.incapacitated || !isturf(ai_clicker.loc))
 		return FALSE
 
 	var/turf/target = get_turf(clicked_on)
 	if (isnull(target))
 		return FALSE
 
-	if (target == ai_caller.loc)
-		target.balloon_alert(ai_caller, "can't roll on yourself!")
+	if (target == ai_clicker.loc)
+		target.balloon_alert(ai_clicker, "can't roll on yourself!")
 		return FALSE
 
-	var/picked_dir = get_dir(ai_caller, target)
+	var/picked_dir = get_dir(ai_clicker, target)
 	if (!picked_dir)
 		return FALSE
-	var/turf/temp_target = get_step(ai_caller, picked_dir) // we can move during the timer so we cant just pass the ref
+	var/turf/temp_target = get_step(ai_clicker, picked_dir) // we can move during the timer so we cant just pass the ref
 
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(temp_target, roll_over_time)
-	ai_caller.balloon_alert_to_viewers("rolling...")
-	addtimer(CALLBACK(src, PROC_REF(do_roll_over), ai_caller, picked_dir), roll_over_time)
+	ai_clicker.balloon_alert_to_viewers("rolling...")
+	addtimer(CALLBACK(src, PROC_REF(do_roll_over), ai_clicker, picked_dir), roll_over_time)
 
 	adjust_uses(-1)
 	if(uses)
@@ -1213,22 +1213,22 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 	COOLDOWN_START(src, time_til_next_tilt, roll_over_cooldown)
 
-/datum/action/innate/ai/ranged/core_tilt/proc/do_roll_over(mob/living/silicon/ai/ai_caller, picked_dir)
-	if (ai_caller.incapacitated || !isturf(ai_caller.loc)) // prevents bugs where the ai is carded and rolls
+/datum/action/innate/ai/ranged/core_tilt/proc/do_roll_over(mob/living/silicon/ai/ai_clicker, picked_dir)
+	if (ai_clicker.incapacitated || !isturf(ai_clicker.loc)) // prevents bugs where the ai is carded and rolls
 		return
 
-	var/turf/target = get_step(ai_caller, picked_dir) // in case we moved we pass the dir not the target turf
+	var/turf/target = get_step(ai_clicker, picked_dir) // in case we moved we pass the dir not the target turf
 
 	if (isnull(target))
 		return
 
 	var/paralyze_time = clamp(6 SECONDS, 0 SECONDS, (roll_over_cooldown * 0.9)) //the clamp prevents stunlocking as the max is always a little less than the cooldown between rolls
 
-	return ai_caller.fall_and_crush(target, MALF_AI_ROLL_DAMAGE, MALF_AI_ROLL_CRIT_CHANCE, null, paralyze_time, picked_dir, rotation = get_rotation_from_dir(picked_dir))
+	return ai_clicker.fall_and_crush(target, MALF_AI_ROLL_DAMAGE, MALF_AI_ROLL_CRIT_CHANCE, null, paralyze_time, picked_dir, rotation = get_rotation_from_dir(picked_dir))
 
 /// Used in our radial menu, state-checking proc after the radial menu sleeps
-/datum/action/innate/ai/ranged/core_tilt/proc/radial_check(mob/living/silicon/ai/caller)
-	if (QDELETED(caller) || caller.incapacitated || caller.stat == DEAD)
+/datum/action/innate/ai/ranged/core_tilt/proc/radial_check(mob/living/silicon/ai/clicker)
+	if (QDELETED(clicker) || clicker.incapacitated || clicker.stat == DEAD)
 		return FALSE
 
 	if (uses <= 0)
@@ -1269,42 +1269,42 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	. = ..()
 	desc = "[desc] It has [uses] use\s remaining."
 
-/datum/action/innate/ai/ranged/remote_vendor_tilt/do_ability(mob/living/caller, atom/clicked_on)
+/datum/action/innate/ai/ranged/remote_vendor_tilt/do_ability(mob/living/clicker, atom/clicked_on)
 
-	if (!isAI(caller))
+	if (!isAI(clicker))
 		return FALSE
-	var/mob/living/silicon/ai/ai_caller = caller
+	var/mob/living/silicon/ai/ai_clicker = clicker
 
-	if(ai_caller.incapacitated)
-		unset_ranged_ability(caller)
+	if(ai_clicker.incapacitated)
+		unset_ranged_ability(clicker)
 		return FALSE
 
 	if(!isvendor(clicked_on))
-		clicked_on.balloon_alert(ai_caller, "not a vendor!")
+		clicked_on.balloon_alert(ai_clicker, "not a vendor!")
 		return FALSE
 
 	var/obj/machinery/vending/clicked_vendor = clicked_on
 
 	if (clicked_vendor.tilted)
-		clicked_vendor.balloon_alert(ai_caller, "already tilted!")
+		clicked_vendor.balloon_alert(ai_clicker, "already tilted!")
 		return FALSE
 
 	if (!clicked_vendor.tiltable)
-		clicked_vendor.balloon_alert(ai_caller, "cannot be tilted!")
+		clicked_vendor.balloon_alert(ai_clicker, "cannot be tilted!")
 		return FALSE
 
 	if (!clicked_vendor.is_operational)
-		clicked_vendor.balloon_alert(ai_caller, "inoperable!")
+		clicked_vendor.balloon_alert(ai_clicker, "inoperable!")
 		return FALSE
 
-	var/picked_dir_string = show_radial_menu(ai_caller, clicked_vendor, GLOB.all_radial_directions, custom_check = CALLBACK(src, PROC_REF(radial_check), caller, clicked_vendor))
+	var/picked_dir_string = show_radial_menu(ai_clicker, clicked_vendor, GLOB.all_radial_directions, custom_check = CALLBACK(src, PROC_REF(radial_check), clicker, clicked_vendor))
 	if (isnull(picked_dir_string))
 		return FALSE
 	var/picked_dir = text2dir(picked_dir_string)
 
 	var/turf/target = get_step(clicked_vendor, picked_dir)
-	if (!ai_caller.can_see(target))
-		to_chat(ai_caller, span_warning("You can't see the target tile!"))
+	if (!ai_clicker.can_see(target))
+		to_chat(ai_clicker, span_warning("You can't see the target tile!"))
 		return FALSE
 
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target, time_to_tilt)
@@ -1317,7 +1317,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		desc = "[initial(desc)] It has [uses] use\s remaining."
 		build_all_button_icons()
 
-	unset_ranged_ability(caller, span_danger("Tilting..."))
+	unset_ranged_ability(clicker, span_danger("Tilting..."))
 	return TRUE
 
 /datum/action/innate/ai/ranged/remote_vendor_tilt/proc/do_vendor_tilt(obj/machinery/vending/vendor, turf/target)
@@ -1330,8 +1330,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	vendor.tilt(target, MALF_VENDOR_TIPPING_CRIT_CHANCE)
 
 /// Used in our radial menu, state-checking proc after the radial menu sleeps
-/datum/action/innate/ai/ranged/remote_vendor_tilt/proc/radial_check(mob/living/silicon/ai/caller, obj/machinery/vending/clicked_vendor)
-	if (QDELETED(caller) || caller.incapacitated || caller.stat == DEAD)
+/datum/action/innate/ai/ranged/remote_vendor_tilt/proc/radial_check(mob/living/silicon/ai/clicker, obj/machinery/vending/clicked_vendor)
+	if (QDELETED(clicker) || clicker.incapacitated || clicker.stat == DEAD)
 		return FALSE
 
 	if (QDELETED(clicked_vendor))
@@ -1340,8 +1340,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if (uses <= 0)
 		return FALSE
 
-	if (!caller.can_see(clicked_vendor))
-		to_chat(caller, span_warning("Lost sight of [clicked_vendor]!"))
+	if (!clicker.can_see(clicked_vendor))
+		to_chat(clicker, span_warning("Lost sight of [clicked_vendor]!"))
 		return FALSE
 
 	return TRUE

@@ -123,6 +123,7 @@
 			/datum/disease/flu,
 			/datum/disease/fluspanish,
 			/datum/disease/magnitis,
+			/datum/disease/weightlessness,
 			/// And here are some that will never roll for real, just to mess around.
 			/datum/disease/death_sandwich_poisoning,
 			/datum/disease/dna_retrovirus,
@@ -138,14 +139,20 @@
 	candidates += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut() //Clean the list after use
 	if(!virus_type)
-		virus_type = pick(list(
+		var/list/virus_candidates = list()
+
+		//Practically harmless diseases. Mostly just gives medical something to do.
+		virus_candidates += list(
 			/datum/disease/anxiety,
 			/datum/disease/beesease,
 			/datum/disease/cold9,
 			/datum/disease/flu,
 			/datum/disease/fluspanish,
 			/datum/disease/magnitis,
-		))
+		)
+
+		//The rest of the diseases either aren't conventional "diseases" or are too unique/extreme to be considered for a normal event
+		virus_type = pick(virus_candidates)
 
 	var/datum/disease/new_disease
 	new_disease = new virus_type()

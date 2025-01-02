@@ -240,6 +240,8 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!anchored)
 		balloon_alert(user, "unanchored!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -284,7 +286,7 @@
 	//no more boulders
 	if(!SSore_generation.available_boulders.len)
 		if(feedback)
-			playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+			playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 			balloon_alert_to_viewers("no boulders to collect!")
 		batch_processing = FALSE
 		return FALSE

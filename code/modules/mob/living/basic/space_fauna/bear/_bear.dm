@@ -26,7 +26,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	friendly_verb_continuous = "bear hugs"
 	friendly_verb_simple = "bear hug"
@@ -53,8 +53,6 @@
 		return FALSE
 
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/bear)
-	can_buckle = TRUE
-	buckle_lying = 0
 
 /mob/living/basic/bear/update_icons()
 	..()
@@ -134,8 +132,8 @@
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	death_message = "loses its false life and collapses!"
-	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1)
-	attack_sound = 'sound/weapons/slap.ogg'
+	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/brain = 1, /obj/item/organ/heart = 1)
+	attack_sound = 'sound/items/weapons/slap.ogg'
 	attack_vis_effect = ATTACK_EFFECT_DISARM
 	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"
@@ -162,7 +160,7 @@
 
 /mob/living/basic/bear/butter/CheckParts(list/parts) //Borrowed code from Cak, allows the brain used to actually control the bear.
 	. = ..()
-	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents
+	var/obj/item/organ/brain/candidate = locate(/obj/item/organ/brain) in contents
 	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
 		return
 	var/datum/mind/candidate_mind = candidate.brainmob.mind

@@ -22,7 +22,7 @@
 	///Accepted "ammo" type
 	var/obj/item/ammo_type = /obj/item/ammo_casing/strilka310
 	///Projectile from said gun. Doesnt automatically inherit said ammo's projectile in case you wanted to make a gun that shoots floor tiles or something.
-	var/obj/item/projectile_type = /obj/projectile/bullet/strilka310
+	var/obj/projectile/projectile_type = /obj/projectile/bullet/strilka310
 	///If the gun has anything in it.
 	var/loaded_gun = TRUE
 	///If the gun is currently loaded with its maximum capacity.
@@ -34,9 +34,9 @@
 	///If the gun shakes the camera when firing
 	var/firing_shakes_camera = TRUE
 	///sound of firing for all but last shot
-	var/fire_sound = 'sound/weapons/gun/general/mountedgun.ogg'
+	var/fire_sound = 'sound/items/weapons/gun/general/mountedgun.ogg'
 	///sound of firing for last shot
-	var/last_fire_sound = 'sound/weapons/gun/general/mountedgunend.ogg'
+	var/last_fire_sound = 'sound/items/weapons/gun/general/mountedgunend.ogg'
 
 /obj/structure/mounted_gun/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

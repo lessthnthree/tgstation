@@ -896,7 +896,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 				living_target.Paralyze(paralyze_time)
 				living_target.emote("scream")
-				playsound(living_target, 'sound/effects/blobattack.ogg', 40, TRUE)
+				playsound(living_target, 'sound/effects/blob/blobattack.ogg', 40, TRUE)
 				playsound(living_target, 'sound/effects/splat.ogg', 50, TRUE)
 				post_crush_living(living_target, was_alive)
 				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
@@ -1161,15 +1161,15 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	return FALSE
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
-	if(!istype(replacer))
-		return FALSE
-	if(!component_parts || !refill_canister)
+	if(!istype(replacer) || !component_parts || !refill_canister)
 		return FALSE
 
-	if(!panel_open || replacer.works_from_distance)
+	var/works_from_distance = istype(replacer, /obj/item/storage/part_replacer/bluespace)
+
+	if(!panel_open || works_from_distance)
 		to_chat(user, display_parts(user))
 
-	if(!panel_open && !replacer.works_from_distance)
+	if(!panel_open && !works_from_distance)
 		return FALSE
 
 	var/restocked = 0

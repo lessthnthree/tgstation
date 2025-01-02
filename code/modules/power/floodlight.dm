@@ -173,6 +173,8 @@
 	var/light_color =  NONSENSICAL_VALUE
 	if(!isnull(color))
 		light_color = color
+	if (cached_color_filter)
+		light_color = apply_matrix_to_color(COLOR_WHITE, cached_color_filter["color"], cached_color_filter["space"] || COLORSPACE_RGB)
 	set_light(light_setting_list[setting], light_power, light_color)
 
 /obj/machinery/power/floodlight/add_context(
@@ -308,7 +310,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+	playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 
 	var/obj/structure/floodlight_frame/floodlight_frame = new(loc)
 	floodlight_frame.state = FLOODLIGHT_NEEDS_LIGHTS
@@ -318,7 +320,7 @@
 	qdel(src)
 
 /obj/machinery/power/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/effects/glasshit.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 
 #undef FLOODLIGHT_OFF
 #undef FLOODLIGHT_LOW
