@@ -8,6 +8,7 @@
 	pickup_sound = 'sound/items/handling/gun/gun_pick_up.ogg'
 	drop_sound = 'sound/items/handling/gun/gun_drop.ogg'
 	sound_vary = TRUE
+	unique_reskin_changes_base_icon_state = TRUE
 
 	///sound when inserting magazine
 	var/load_sound = 'sound/items/weapons/gun/general/magazine_insert_full.ogg'
@@ -201,11 +202,8 @@
 		update_appearance()
 
 /obj/item/gun/ballistic/update_icon_state()
-	if(current_skin)
-		icon_state = "[unique_reskin[current_skin]][sawn_off ? "_sawn" : ""]"
-	else
-		icon_state = "[base_icon_state || initial(icon_state)][sawn_off ? "_sawn" : ""]"
-	return ..()
+	. = ..()
+	icon_state = "[base_icon_state || initial(icon_state)][sawn_off ? "_sawn" : ""]"
 
 /obj/item/gun/ballistic/update_overlays()
 	. = ..()
@@ -452,10 +450,6 @@
 		if (sawoff(user, A))
 			return
 
-	if(misfire_probability && istype(A, /obj/item/stack/sheet/cloth))
-		if(guncleaning(user, A))
-			return
-
 	return FALSE
 
 /obj/item/gun/ballistic/proc/check_if_held(mob/user)
@@ -684,19 +678,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	recoil = SAWN_OFF_RECOIL
 	update_appearance()
 	return TRUE
-
-/obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/A)
-	if(misfire_probability == initial(misfire_probability))
-		balloon_alert(user, "it's already clean!")
-		return
-
-	user.changeNext_move(CLICK_CD_MELEE)
-	balloon_alert(user, "cleaning...")
-
-	if(do_after(user, 10 SECONDS, target = src))
-		misfire_probability = initial(misfire_probability)
-		balloon_alert(user, "fouling cleaned out")
-		return TRUE
 
 /obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
 	if(!can_modify_ammo)
