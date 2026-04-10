@@ -401,7 +401,6 @@
 
 /obj/item/verb/move_to_top()
 	set name = "Move To Top"
-	set category = "Object"
 	set src in oview(1)
 
 	if(!isturf(loc) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || anchored)
@@ -822,7 +821,6 @@
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
-	set category = "Object"
 	set name = "Pick up"
 
 	if(usr.incapacitated || !Adjacent(usr))
@@ -1515,6 +1513,7 @@
 		if(!istype(loc, /turf))
 			return
 		source = loc
+	SEND_SIGNAL(src, COMSIG_ITEM_BEFORE_PICKUP_ANIMATION)
 	var/image/pickup_animation = image(icon = src)
 	SET_PLANE(pickup_animation, GAME_PLANE, source)
 	pickup_animation.transform.Scale(0.75)
@@ -1551,6 +1550,7 @@
 	if(!istype(moving_from))
 		return
 
+	SEND_SIGNAL(src, COMSIG_ITEM_BEFORE_DROP_ANIMATION)
 	var/turf/current_turf = get_turf(src)
 	var/direction = get_dir(moving_from, current_turf)
 	var/from_x = moving_from.base_pixel_x
@@ -2217,7 +2217,7 @@
 		return FALSE
 
 	if (!istype(target_limb))
-		target_limb = victim.get_bodypart(target_limb) || victim.bodyparts[1]
+		target_limb = victim.get_bodypart(target_limb) || victim.get_bodypart()
 
 	return get_embed()?.embed_into(victim, target_limb)
 
