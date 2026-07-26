@@ -79,24 +79,59 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_ALARM)
 	return TRUE
 
-/// Generates an admin message and creates an investigate log.
+/**
+ * On supermatter delamination generates an admin message and creates an investigate log.
+ *
+ * Arguments:
+ * * sm - Supermatter crystal this strategy is attached to
+ */
 /datum/sm_delam/proc/log_delamination(obj/machinery/power/supermatter_crystal/sm)
 	message_admins("[ADMIN_VERBOSEJMP(sm)] triggered a [name].")
 	sm.investigate_log("triggered a [name].", INVESTIGATE_ENGINE)
+
+/**
+ * On supermatter delamination strategy change generates an admin message and creates an investigate log.
+ * Includes a cooldown to prevent log spam, activated if a crystal is borderline between two delamination
+ * states and is flipping back and forth.
+ *
+ * Arguments:
+ * * sm - Supermatter crystal this strategy is attached to
+ * * selected - If this strategy is currently active
+ */
+/datum/sm_delam/proc/log_strategy_change(obj/machinery/power/supermatter_crystal/sm, selected = FALSE)
+	if(!COOLDOWN_FINISHED(sm, strategy_change_cooldown))
+		return
+
+	var/message_info = "functional strategy [selected ? "is now" : "was"] [name]."
+	sm.investigate_log(message_info, INVESTIGATE_ENGINE)
+	if(!SSticker.HasRoundStarted())
+		return
+
+	message_admins("[ADMIN_VERBOSEJMP(sm)] [message_info]")
+	if(istype(src, /datum/sm_delam/explosive)) // these ones are less important, we want to track the spicier delams
+		return
+
+	// at this point the final log/notification is the non-explosive delam strategy, so we silence
+	sm.strategy_changes_tracker++
+	if(sm.strategy_changes_tracker < 3)
+		return
+
+	sm.investigate_log("is flapping between delamination strategies, suppressing log for 10 minutes.", INVESTIGATE_ENGINE)
+	message_admins("[ADMIN_VERBOSEJMP(sm)] is flapping between delamination strategies, suppressing log for 10 minutes.")
+	sm.strategy_changes_tracker = 0
+	COOLDOWN_START(sm, strategy_change_cooldown, (10 MINUTES))
 
 /// Called when a supermatter switches its strategy from another one to us.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam/proc/on_select(obj/machinery/power/supermatter_crystal/sm)
 	SHOULD_CALL_PARENT(TRUE)
-	sm.investigate_log("functional strategy is now [name].", INVESTIGATE_ENGINE)
-	if(SSticker.HasRoundStarted())
-		message_admins("[ADMIN_VERBOSEJMP(sm)] functional strategy is now [name].")
+	log_strategy_change(sm, selected = TRUE)
 
 /// Called when a supermatter switches its strategy from us to something else.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam/proc/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	SHOULD_CALL_PARENT(TRUE)
-	sm.investigate_log("previous strategy was [name].", INVESTIGATE_ENGINE)
+	log_strategy_change(sm, selected = FALSE)
 
 /// Added to an examine return value.
 /// [/obj/machinery/power/supermatter_crystal/examine]

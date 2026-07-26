@@ -188,6 +188,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	/// Cooldown for sending emergency alerts to the common radio channel
 	COOLDOWN_DECLARE(common_radio_cooldown)
+	/// Cooldown for delam strategy change alerts
+	COOLDOWN_DECLARE(strategy_change_cooldown)
+	/// Count of delam strategy changes in the tracking time period
+	var/strategy_changes_tracker = 0
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
