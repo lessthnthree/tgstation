@@ -328,14 +328,13 @@
 			)
 			add_mood_event("vomit", /datum/mood_event/vomitself)
 		distance = 0
-	else
-		if(message)
-			visible_message(
-				span_danger("[src] throws up!"),
-				span_userdanger("You throw up!"),
-			)
-			if(!isflyperson(src))
-				add_mood_event("vomit", /datum/mood_event/vomit)
+	else if(message)
+		visible_message(
+			span_danger("[src] throws up!"),
+			span_userdanger("You throw up!"),
+		)
+		if(!HAS_TRAIT(src, TRAIT_VOMIT_SLURPER))
+			add_mood_event("vomit", /datum/mood_event/vomit)
 
 	if(stun)
 		var/stun_time = 8 SECONDS
@@ -401,13 +400,14 @@
 		guts.throw_at(throw_target, power, 4, src)
 
 
-/mob/living/carbon/fully_replace_character_name(oldname,newname)
+/mob/living/carbon/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
 	. = ..()
-	if(dna)
-		dna.real_name = real_name
+	if(!.)
+		return
+
+	dna?.real_name = real_name
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
-	if(my_head)
-		my_head.real_name = real_name
+	my_head?.real_name = real_name
 
 
 /mob/living/carbon/set_body_position(new_value)
@@ -775,7 +775,7 @@
 	return ..()
 
 /mob/living/carbon/can_be_revived()
-	if(HAS_TRAIT(src, TRAIT_HUSK))
+	if(HAS_TRAIT_NOT_FROM(src, TRAIT_HUSK, /datum/status_effect/zombie::id))
 		return FALSE
 	if(!HAS_TRAIT(src, TRAIT_BRAINLESS_CARBON) && !get_organ_by_type(/obj/item/organ/brain))
 		return FALSE
